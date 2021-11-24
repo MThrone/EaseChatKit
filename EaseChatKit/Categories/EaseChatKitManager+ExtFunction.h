@@ -2,7 +2,7 @@
 //  EaseChatKitManager+currentUnreadCount.h
 //  EaseChatKit
 //
-//  Created by 娜塔莎 on 2020/11/24.
+//  Created by zhangchong on 2020/11/24.
 //
 
 

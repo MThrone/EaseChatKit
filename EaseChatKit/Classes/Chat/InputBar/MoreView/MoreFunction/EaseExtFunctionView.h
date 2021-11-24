@@ -2,8 +2,8 @@
 //  EaseExtFunctionView.h
 //  EaseIM
 //
-//  Created by 娜塔莎 on 2019/10/23.
-//  Copyright © 2019 娜塔莎. All rights reserved.
+//  Created by zhangchong on 2019/10/23.
+//  Copyright © 2019 zhangchong. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -14,9 +14,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, ExtType) {
-    ExtTypeChatBar = 1, // 输入组件更多功能区
-    ExtTypeLongPress, //长按更多功能扩展区
-    ExtTypeCustomCellLongPress, //自定义cell长按功能区
+    ExtTypeChatBar = 1, // Input component extension functional areas
+    ExtTypeLongPress, //Long press the extension area extension functional
+    ExtTypeCustomCellLongPress, // Custom cell long press the functional area
 };
 @interface EaseExtMenuViewModel : NSObject
 @property (nonatomic, assign) CGFloat cellLonger;
@@ -44,7 +44,7 @@ typedef NS_ENUM(NSInteger, ExtType) {
 @property (nonatomic, weak) id<EaseMoreFunctionViewDelegate> delegate;
 @property (nonatomic, readonly) NSMutableArray<EaseExtMenuModel*> *extMenuModelArray;
 - (instancetype)initWithextMenuModelArray:(NSMutableArray<EaseExtMenuModel*>*)extMenuModelArray menuViewModel:(EaseExtMenuViewModel*)menuViewModel ;
-//视图尺寸
+// View size
 - (CGSize)getExtViewSize;
 @end
 
@@ -62,7 +62,7 @@ typedef NS_ENUM(NSInteger, ExtType) {
 @property (nonatomic, weak) id<SessionToolbarCellDelegate> delegate;
 
 - (void)setupToolbar;
-- (void)personalizeToolbar:(EaseExtMenuModel*)menuItemModel menuViewMode:(EaseExtMenuViewModel*)menuViewModel;//个性化工具栏功能描述
+- (void)personalizeToolbar:(EaseExtMenuModel*)menuItemModel menuViewMode:(EaseExtMenuViewModel*)menuViewModel;//Personalized toolbar function description
 @end
 
 NS_ASSUME_NONNULL_END

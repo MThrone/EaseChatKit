@@ -28,6 +28,4 @@
 - (instancetype)initWithConversationsViewModel:(EaseConversationViewModel*)viewModel
                                     identifier:(NSString *)identifier;
 
-- (void)resetViewModel:(EaseConversationViewModel *)aViewModel;
-
 @end

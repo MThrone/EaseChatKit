@@ -58,86 +58,86 @@ NS_ASSUME_NONNULL_BEGIN
 - (UITableViewCell *)cellForItem:(UITableView *)tableView messageModel:(EaseMessageModel *)messageModel;
 
 /**
- * 当前所长按的 自定义cell 的扩展区数据模型组
+ * The extension data model group of the current custom cell
  *
- * @param   defaultLongPressItems       默认长按扩展区功能数据模型组      （默认共有：复制，删除，撤回（发送消息时间距当前时间小于2分钟））
- * @param   customCell                               当前长按的自定义cell
+ * @param   defaultLongPressItems       Default long - press extended area functional data model group     (The default values are copy, delete, and recall (the sending time is less than 2 minutes).)
+ * @param   customCell                  Current long - pressed custom cell
  *
  */
 - (NSMutableArray<EaseExtMenuModel *> *)customCellLongPressExtMenuItemArray:(NSMutableArray<EaseExtMenuModel*>*)defaultLongPressItems customCell:(UITableViewCell*)customCell;
 
 
-/*输入区回调*/
+/* Input view callback */
 
 /**
- * EaseChatKit发送消息前回调
+ * EaseChatKit callback before sending a message
  *
- * @param   aMessage      将要发送的消息
+ * @param   aMessage      The message to be sent
  *
  */
 - (AgoraChatMessage *)willSendMessage:(AgoraChatMessage *)aMessage;
 
 /**
- * 发送消息完成回调
+ * Send a message to complete the callback
  *
- * @param   message       发送完成的消息
- * @param   error         发送消息结果
+ * @param   message       Sending a completed message
+ * @param   error         Message sending Result
  *
  */
 -(void)didSendMessage:(AgoraChatMessage *)message error:(AgoraChatError *)error;
 
 /**
- * 当前会话输入扩展区数据模型组
+ * The current session enters the extended area data model group
  *
- * @param   defaultInputBarItems        默认功能数据模型组   （默认有序：相册，相机，位置，文件）
- * @param   conversationType                 当前会话类型：单聊，群聊，聊天室
+ * @param   defaultInputBarItems        Default function Data model group (default order: photo album, camera, attachments)
+ * @param   conversationType            Current session type: single chat, group chat, chat room
  *
  */
 - (NSMutableArray<EaseExtMenuModel *> *)inputBarExtMenuItemArray:(NSMutableArray<EaseExtMenuModel*>*)defaultInputBarItems conversationType:(AgoraChatConversationType)conversationType;
 /**
- * 输入区键盘输入变化回调  例：@群成员
+ * Input area Keyboard input change callback example: @ group member
  */
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
 
 /**
- 对方正在输入
-*/
+ * The other party is typing
+ */
 - (void)beginTyping;
 
 /**
- 对方结束输入
-*/
+ * End of input
+ */
 - (void)endTyping;
 
 
-/* 消息事件回调 */
+/* Message event callback */
 
 /**
- * 消息点击事件 （返回是否需要执行默认点击事件） 默认 YES
+ * Message click event (returns whether the default click event needs to be executed) Defaults to YES
  *
- * @param   message         当前点击的消息
- * @param   userData        当前点击的消息携带的用户资料
+ * @param   message         The currently clicked message
+ * @param   userData        The user profile carried by the currently clicked message
  *
  */
 - (BOOL)didSelectMessageItem:(AgoraChatMessage *)message userProfile:(id<EaseUserProfile>)userData;
 
 /**
- * 当前所长按消息的扩展区数据模型组
+ * The extended area data model group for the current specific message
  *
- * @param   defaultLongPressItems       默认长按扩展区功能数据模型组  （默认共有：复制，删除， 撤回）
- * @param   message                     当前长按的消息
+ * @param   defaultLongPressItems       Default long press extended area function Data model group (default: copy, delete, recall)
+ * @param   message                     Current long-press message
  *
  */
 - (NSMutableArray<EaseExtMenuModel *> *)messageLongPressExtMenuItemArray:(NSMutableArray<EaseExtMenuModel*>*)defaultLongPressItems message:(AgoraChatMessage*)message;
 
 
-/* 页面下拉加载回调 */
+/* Page dropdown load callback */
 
 /**
- * 下拉加载更多消息回调 
+ * Drop down to load more message callbacks
  *
- * @param   firstMessageId          第一条消息 id
- * @param   messageList             当前消息列表
+ * @param   firstMessageId          First Message ID
+ * @param   messageList             Current Message list
  *
  */
 - (void)loadMoreMessageData:(NSString *)firstMessageId currentMessageList:(NSArray<AgoraChatMessage *> *)messageList;

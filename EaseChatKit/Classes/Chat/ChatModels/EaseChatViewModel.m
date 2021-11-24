@@ -2,7 +2,7 @@
 //  EaseChatViewModel.m
 //  EaseChatKit
 //
-//  Created by 娜塔莎 on 2020/11/17.
+//  Created by zhangchong on 2020/11/17.
 //
 
 #import "EaseChatViewModel.h"
@@ -21,8 +21,8 @@
         _msgTimeItemBgColor = [UIColor whiteColor];
         _msgTimeItemFont = [UIFont fontWithName:@"PingFang SC" size:12.0];
         _msgTimeItemFontColor = [UIColor colorWithHexString:@"#999999"];
-        _receiveBubbleBgPicture = [UIImage easeUIImageNamed:@"msg_bg_recv"];
-        _sendBubbleBgPicture = [UIImage easeUIImageNamed:@"msg_bg_send"];
+        _receiveBubbleBgImage = [UIImage easeUIImageNamed:@"msg_bg_recv"];
+        _sendBubbleBgImage = [UIImage easeUIImageNamed:@"msg_bg_send"];
         BubbleCornerRadius right = {16, 16, 16, 4};
         BubbleCornerRadius left = {16, 16, 4, 16};
         _rightAlignmentCornerRadius = right;
@@ -75,21 +75,21 @@
     }
 }
 
-- (void)setReceiveBubbleBgPicture:(UIImage *)receiveBubbleBgPicture
+- (void)setreceiveBubbleBgImage:(UIImage *)receiveBubbleBgImage
 {
-    if (receiveBubbleBgPicture) {
-        _receiveBubbleBgPicture = receiveBubbleBgPicture;
+    if (receiveBubbleBgImage) {
+        _receiveBubbleBgImage = receiveBubbleBgImage;
     } else {
-        _receiveBubbleBgPicture = [UIImage easeUIImageNamed:@""];
+        _receiveBubbleBgImage = [UIImage easeUIImageNamed:@""];
     }
 }
 
-- (void)setSendBubbleBgPicture:(UIImage *)sendBubbleBgPicture
+- (void)setsendBubbleBgImage:(UIImage *)sendBubbleBgImage
 {
-    if (sendBubbleBgPicture) {
-        _sendBubbleBgPicture = sendBubbleBgPicture;
+    if (sendBubbleBgImage) {
+        _sendBubbleBgImage = sendBubbleBgImage;
     } else {
-        _sendBubbleBgPicture = [UIImage easeUIImageNamed:@"“"];
+        _sendBubbleBgImage = [UIImage easeUIImageNamed:@"“"];
     }
 }
 

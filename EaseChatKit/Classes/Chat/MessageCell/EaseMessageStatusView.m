@@ -17,7 +17,7 @@
 @property (nonatomic, strong) UIButton *failButton;
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;
 
-@property (strong, nonatomic) IBOutlet EaseOneLoadingAnimationView *loadingView;//加载view
+@property (strong, nonatomic) IBOutlet EaseOneLoadingAnimationView *loadingView;
 
 @property (nonatomic, strong) UIImageView *loadingImageView;
 @property (nonatomic, assign) CGFloat loadingAngle;

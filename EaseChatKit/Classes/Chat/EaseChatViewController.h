@@ -47,7 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 // Sending message read receipt
 - (void)sendReadReceipt:(AgoraChatMessage *)msg;
 
-// Refresh tableview. isScrollBottom:Whether the list scrolls to the bottom (at the latest message)
+// Refresh tableview.
+//      isScrollBottom:Whether the list scrolls to the bottom (at the latest message)
 - (void)refreshTableView:(BOOL)isScrollBottom;
 
 // Refresh tableview with messaegs.

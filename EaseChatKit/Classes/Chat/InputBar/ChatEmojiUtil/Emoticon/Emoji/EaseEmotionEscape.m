@@ -104,7 +104,7 @@ static EaseEmotionEscape *_sharedInstance = nil;
                 str = [NSString stringWithFormat:@"[%@]", str];
                 textAttachmentString = [[NSAttributedString alloc] initWithString:str];
             }else {
-                textAttachmentString = [[NSAttributedString alloc] initWithString:@"[表情]"];
+                textAttachmentString = [[NSAttributedString alloc] initWithString:@"[emoji]"];
             }
         }
         

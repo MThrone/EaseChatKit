@@ -78,7 +78,7 @@
     self.titleLabel = [[UILabel alloc] init];
     self.titleLabel.font = [UIFont systemFontOfSize:18];
     self.titleLabel.textColor = [UIColor grayColor];
-    self.titleLabel.text = @"按住说话";
+    self.titleLabel.text = @"Hold down the talk";
     [self addSubview:self.titleLabel];
     [self.titleLabel Ease_makeConstraints:^(EaseConstraintMaker *make) {
         make.top.equalTo(self).offset(30);
@@ -245,7 +245,7 @@
 }
 
 #pragma mark - Private Record
-//开始录语音消息
+//Start recording
 - (void)_startRecord
 {
     self.timeLength = 0;
@@ -268,7 +268,7 @@
         }
     }];
 }
-//停止录语音消息并发送语音消息
+//Stop recording and send a voice message
 - (void)_stopRecord
 {
     [self _stopTimer];
@@ -295,7 +295,7 @@
 
 - (void)recordButtonTouchBegin
 {
-    self.titleLabel.text = @"松手发送";
+    self.titleLabel.text = @"Let go to send";
     [self _startRecord];
 }
 
@@ -303,7 +303,7 @@
 {
     [self _stopRecord];
     
-    self.titleLabel.text = @"按住说话";
+    self.titleLabel.text = @"Hold down the talk";
     [self.recordButton setImage:[UIImage easeUIImageNamed:@"grayAudioBtn"] forState:UIControlStateNormal];
 }
 
@@ -311,7 +311,7 @@
 {
     self.titleLabel.hidden = NO;
     self.countView.hidden = YES;
-    self.titleLabel.text = @"松手取消";
+    self.titleLabel.text = @"Let go to cancel";
     [self.recordButton setImage:[UIImage easeUIImageNamed:@"redAudioBtn"] forState:UIControlStateNormal];
 }
 
@@ -319,13 +319,13 @@
 {
     self.titleLabel.hidden = YES;
     self.countView.hidden = NO;
-    self.titleLabel.text = @"松手发送";
+    self.titleLabel.text = @"Let go to send";
     [self.recordButton setImage:[UIImage easeUIImageNamed:@"blueAudioBtn"] forState:UIControlStateNormal];
 }
 
 - (void)recordButtonTouchCancelEnd
 {
-    self.titleLabel.text = @"按住说话";
+    self.titleLabel.text = @"Hold down the talk";
     [self.recordButton setImage:[UIImage easeUIImageNamed:@"grayAudioBtn"] forState:UIControlStateNormal];
     
     [self _cancelRecord];

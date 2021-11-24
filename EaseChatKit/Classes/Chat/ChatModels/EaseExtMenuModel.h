@@ -2,7 +2,7 @@
 //  EaseExtMenuModel.h
 //  EaseChatKit
 //
-//  Created by 娜塔莎 on 2020/11/24.
+//  Created by zhangchong on 2020/11/24.
 //
 
 #import <UIKit/UIKit.h>
@@ -15,8 +15,13 @@ typedef void(^menuItemDidSelectedHandle)(NSString* itemDesc, BOOL isExecuted);
 
 - (instancetype)initWithData:(UIImage *)icon funcDesc:(NSString *)funcDesc handle:(menuItemDidSelectedHandle)menuItemHandle;
 
-@property (nonatomic, strong) UIImage *icon; //图标
-@property (nonatomic, strong) NSString *funcDesc; //功能描述
+// Icon
+@property (nonatomic, strong) UIImage *icon;
+
+// Function description
+@property (nonatomic, strong) NSString *funcDesc;
+
+// Handle
 @property (nonatomic, strong) menuItemDidSelectedHandle itemDidSelectedHandle;
 
 @end

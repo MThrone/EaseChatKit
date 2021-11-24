@@ -2,8 +2,8 @@
 //  EaseChatViewController+ChatToolBarIncident.m
 //  EaseIM
 //
-//  Created by 娜塔莎 on 2020/7/13.
-//  Copyright © 2020 娜塔莎. All rights reserved.
+//  Created by zhangchong on 2020/7/13.
+//  Copyright © 2020 zhangchong. All rights reserved.
 //
 
 #import "EaseChatViewController+ChatToolBarIncident.h"
@@ -18,7 +18,7 @@
 #import "UIViewController+HUD.h"
 
 /**
-    媒体库
+    Media
  */
 static const void *imagePickerKey = &imagePickerKey;
 @implementation EaseChatViewController (ChatToolBarMeida)
@@ -32,11 +32,11 @@ static const void *imagePickerKey = &imagePickerKey;
 
     if (componentType == EMChatToolBarCamera) {
         #if TARGET_IPHONE_SIMULATOR
-            [EaseAlertController showErrorAlert:@"模拟器不支持照相机"];
+            [EaseAlertController showErrorAlert:@"The simulator does not support cameras"];
         #elif TARGET_OS_IPHONE
             AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
             if (authStatus == AVAuthorizationStatusRestricted || authStatus ==AVAuthorizationStatusDenied) {
-                [EaseAlertController showErrorAlert:@"未开启相机权限"];
+                [EaseAlertController showErrorAlert:@"The camera permission is not enabled"];
                 return;
             }
             __weak typeof(self) weakself = self;
@@ -60,24 +60,24 @@ static const void *imagePickerKey = &imagePickerKey;
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (status == permissions) {
-                //limit权限
+                //limit permission
                 self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
                 self.imagePicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie];
                 [self presentViewController:self.imagePicker animated:YES completion:nil];
             }
             if (status == PHAuthorizationStatusAuthorized) {
-                //已获取权限
+                //Permissions have been obtained.
                 self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
                 self.imagePicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie];
                 [self presentViewController:self.imagePicker animated:YES completion:nil];
             }
             if (status == PHAuthorizationStatusDenied) {
-                //用户已经明确否认了这一照片数据的应用程序访问
-                [EaseAlertController showErrorAlert:@"不允许访问相册"];
+                //The user has explicitly denied application access to this photo data
+                [EaseAlertController showErrorAlert:@"Access to albums is not allowed"];
             }
             if (status == PHAuthorizationStatusRestricted) {
-                //此应用程序没有被授权访问的照片数据。可能是家长控制权限
-                [EaseAlertController showErrorAlert:@"没有授权访问相册"];
+                //This application does not have authorized access to photo data. It could be parental control
+                [EaseAlertController showErrorAlert:@"Access to the album is not authorized"];
             }
         });
     }];
@@ -116,7 +116,7 @@ static const void *imagePickerKey = &imagePickerKey;
                             if (data != nil) {
                                 [self _sendImageDataAction:data];
                             } else {
-                                [EaseAlertController showErrorAlert:@"图片太大，请选择其他图片"];
+                                [EaseAlertController showErrorAlert:@"Picture is too big, please select another picture"];
                             }
                         }];
                     }
@@ -261,7 +261,7 @@ static const void *imagePickerKey = &imagePickerKey;
         navController.modalPresentationStyle = 0;
         [self.navigationController presentViewController:navController animated:YES completion:nil];
     } else {
-        [EaseAlertController showErrorAlert:@"未开启位置权限"];
+        [EaseAlertController showErrorAlert:@"Location permissions are not enabled"];
     }
 }
 
@@ -272,7 +272,7 @@ static const void *imagePickerKey = &imagePickerKey;
         AgoraChatLocationMessageBody *body = [[AgoraChatLocationMessageBody alloc] initWithLatitude:aCoord.latitude longitude:aCoord.longitude address:aAddress];
         [self sendMessageWithBody:body ext:nil];
     } else {
-        [EaseAlertController showErrorAlert:@"未获取到位置权限"];
+        [EaseAlertController showErrorAlert:@"The location permission is not obtained"];
     }
 }
 
@@ -318,7 +318,7 @@ static const void *imagePickerKey = &imagePickerKey;
         [url stopAccessingSecurityScopedResource];
         return;
     }
-    [self showHint:@"授权失败!"];
+    [self showHint:@"Authorization failure!"];
 }
 
 //icloud
@@ -333,7 +333,7 @@ static const void *imagePickerKey = &imagePickerKey;
             NSError *error = nil;
             NSData *fileData = [NSData dataWithContentsOfURL:newURL options:NSDataReadingMappedIfSafe error:&error];
             if (error) {
-                [self showHint:@"文件读取失败!"];
+                [self showHint:@"File reading failure!"];
                 return;
             }
             NSLog(@"fileName: %@\nfileUrl: %@", fileName, newURL);

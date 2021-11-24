@@ -2,8 +2,8 @@
 //  EMMsgRecordCell.m
 //  EaseIM
 //
-//  Created by 娜塔莎 on 2019/12/9.
-//  Copyright © 2019 娜塔莎. All rights reserved.
+//  Created by zhangchong on 2019/12/9.
+//  Copyright © 2019 zhangchong. All rights reserved.
 //
 
 #import "EMMsgRecordCell.h"

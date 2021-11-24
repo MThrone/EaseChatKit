@@ -37,7 +37,7 @@
     EaseChatViewModel *_viewModel;
     EaseMessageCell *_currentLongPressCell;
     UITableViewCell *_currentLongPressCustomCell;
-    BOOL _isReloadViewWithModel; //重新刷新会话页面
+    BOOL _isReloadViewWithModel; //Refresh the session page
 }
 @property (nonatomic, strong) EaseExtFunctionView *longPressView;
 @property (nonatomic, strong) EaseInputBar *inputBar;
@@ -100,7 +100,7 @@
         
         _inputBar = [[EaseInputBar alloc] initWithViewModel:_viewModel];
         _inputBar.delegate = self;
-        //会话工具栏
+        //Session toolbar
         [self _setupChatBarMoreViews];
     }
     return self;
@@ -258,7 +258,7 @@
             [self.currentConversation setDraft:self.inputBar.textView.text];
         }*/
     }
-    //刷新会话列表
+    //Refreshing the session list
     [[NSNotificationCenter defaultCenter] postNotificationName:CONVERSATIONLIST_UPDATE object:nil];
     [[AgoraChatClient sharedClient].chatManager removeDelegate:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -287,18 +287,18 @@
 
 - (void)_setupChatBarMoreViews
 {
-    //语音
+    //voice
     NSString *path = [self getAudioOrVideoPath];
     EaseInputBarRecordAudioView *recordView = [[EaseInputBarRecordAudioView alloc] initWithRecordPath:path];
     recordView.delegate = self;
     self.inputBar.recordAudioView = recordView;
     
-    //表情
+    //Emoticon
     EaseChatInputBarEmoticonView *moreEmoticonView = [[EaseChatInputBarEmoticonView alloc] initWithViewHeight:255];
     moreEmoticonView.delegate = self;
     self.inputBar.moreEmoticonView = moreEmoticonView;
     
-    //扩展功能
+    //Extend the functionality
     __weak typeof(self) weakself = self;
     EaseExtMenuModel *photoAlbumExtModel = [[EaseExtMenuModel alloc]initWithData:[UIImage easeUIImageNamed:@"photo-album"] funcDesc:@"Photo & Video Library" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
         [weakself chatToolBarComponentIncidentAction:EMChatToolBarPhotoAlbum];
@@ -340,9 +340,9 @@
         EaseMessageModel *model = (EaseMessageModel *)obj;
         if (model.type == AgoraChatMessageTypeExtRecall) {
             if ([model.message.from isEqualToString:self.currentConversation.conversationId]) {
-                cellString = @"您撤回一条消息";
+                cellString = @"You recall a message";
             } else {
-                cellString = @"对方撤回一条消息";
+                cellString = @"The other party recall a message";
             }
             type = EaseChatWeakRemindSystemHint;
         }
@@ -515,12 +515,13 @@
         isCustom = [self.delegate didSelectMessageItem:aCell.model.message userProfile:aCell.model.userDataProfile];
         if (!isCustom) return;
     }
-    //消息事件策略分类
+    //Message event policy classification
     AgoraChatMessageEventStrategy *eventStrategy = [AgoraChatMessageEventStrategyFactory getStratrgyImplWithMsgCell:aCell];
     eventStrategy.chatController = self;
     [eventStrategy messageCellEventOperation:aCell];
 }
-//消息长按事件
+
+//Message long press event
 - (void)messageCellDidLongPress:(UITableViewCell *)aCell cgPoint:(CGPoint)point
 {
     if (aCell != _currentLongPressCell) {
@@ -664,7 +665,7 @@
     [self.tableView reloadData];
 }
 
-//头像点击
+//Avatar click
 - (void)avatarDidSelected:(EaseMessageModel *)model
 {
     [self hideLongPressView];
@@ -672,7 +673,8 @@
         [self.delegate avatarDidSelected:model.userDataProfile];
     }
 }
-//头像长按
+
+//Avatar long press
 - (void)avatarDidLongPress:(EaseMessageModel *)model
 {
     [self hideLongPressView];
@@ -780,13 +782,12 @@
 
 - (void)keyBoardWillShow:(NSNotification *)note
 {
-    // 获取用户信息
+    // Obtaining User information
     NSDictionary *userInfo = [NSDictionary dictionaryWithDictionary:note.userInfo];
-    // 获取键盘高度
+    // Get keyboard height
     CGRect keyBoardBounds  = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat keyBoardHeight = keyBoardBounds.size.height;
     
-    // 定义好动作
     void (^animation)(void) = ^void(void) {
         [self.inputBar Ease_updateConstraints:^(EaseConstraintMaker *make) {
             make.bottom.equalTo(self.view).offset(-keyBoardHeight);
@@ -801,7 +802,6 @@
 
 - (void)keyBoardWillHide:(NSNotification *)note
 {
-    // 定义好动作
     void (^animation)(void) = ^void(void) {
         [self.inputBar Ease_updateConstraints:^(EaseConstraintMaker *make) {
             make.bottom.equalTo(self.view);
@@ -812,7 +812,7 @@
 
 #pragma mark - Gesture Recognizer
 
-//点击消息列表，收起更多功能区
+//Click on the message list to collapse more functions
 - (void)handleTapTableViewAction:(UITapGestureRecognizer *)aTap
 {
     if (aTap.state == UIGestureRecognizerStateEnded) {
@@ -966,14 +966,14 @@
     [[EMAudioPlayerUtil sharedHelper] stopPlayer];
 }
 
-//隐藏长按
+//Hide long click function area
 - (void)hideLongPressView
 {
     [self.longPressView removeFromSuperview];
     [self resetCellLongPressStatus:_currentLongPressCell];
 }
 
-//自定义cell长按
+//Hold down the custom cell
 - (void)customCellLongPressAction:(UILongPressGestureRecognizer *)aLongPress
 {
     if (aLongPress.state == UIGestureRecognizerStateBegan) {
@@ -985,14 +985,14 @@
     }
 }
 
-//发送消息体
+//Sending message body
 - (void)sendMessageWithBody:(AgoraChatMessageBody *)aBody
                         ext:(NSDictionary * __nullable)aExt
 {
     NSString *from = [[AgoraChatClient sharedClient] currentUsername];
     NSString *to = self.currentConversation.conversationId;
     AgoraChatMessage *message = [[AgoraChatMessage alloc] initWithConversationID:to from:from to:to body:aBody ext:aExt];
-    //是否需要发送阅读回执
+    //Whether a reading receipt needs to be sent
     if([aExt objectForKey:MSG_EXT_READ_RECEIPT]) {
         message.isNeedGroupAck = YES;
     }
@@ -1016,7 +1016,7 @@
     [self.dataArray addObjectsFromArray:formated];
     [self.messageList addObject:message];
     if (!self.moreMsgId)
-        //新会话的第一条消息
+        //The first message of a new session
         self.moreMsgId = message.messageId;
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -1039,10 +1039,10 @@
     }
 }
 
-//发送输入状态
+//Send input state
 - (void)setEditingStatusVisible:(BOOL)editingStatusVisible{}
 
-//已读回执
+//Read receipt
 - (void)sendReadReceipt:(AgoraChatMessage *)msg{}
 
 - (void)refreshTableView:(BOOL)isScrollBottom
