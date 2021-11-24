@@ -1,0 +1,54 @@
+//
+//  EMMsgTouchIncident.h
+//  EaseIM
+//
+//  Created by 娜塔莎 on 2020/7/7.
+//  Copyright © 2020 娜塔莎. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "EaseChatViewController.h"
+#import "EaseMessageCell.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface AgoraChatMessageEventStrategy : NSObject
+
+@property (nonatomic, strong) EaseChatViewController *chatController;
+
+- (void)messageCellEventOperation:(EaseMessageCell *)aCell;
+
+@end
+
+
+/**
+    消息事件工厂
+ */
+@interface AgoraChatMessageEventStrategyFactory : NSObject
+
++ (AgoraChatMessageEventStrategy * _Nonnull)getStratrgyImplWithMsgCell:(EaseMessageCell *)aCell;
+
+@end
+
+@interface TextMsgEvent : AgoraChatMessageEventStrategy
+@end
+
+@interface ImageMsgEvent : AgoraChatMessageEventStrategy
+@end
+
+@interface LocationMsgEvent : AgoraChatMessageEventStrategy
+@end
+
+@interface VoiceMsgEvent : AgoraChatMessageEventStrategy
+@end
+
+@interface VideoMsgEvent : AgoraChatMessageEventStrategy
+@end
+
+@interface FileMsgEvent : AgoraChatMessageEventStrategy
+@end
+
+@interface ConferenceMsgEvent : AgoraChatMessageEventStrategy
+@end
+
+NS_ASSUME_NONNULL_END
