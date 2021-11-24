@@ -2,7 +2,7 @@
 //  EaseConversationModel.h
 //  EaseChatKit
 //
-//  Created by 娜塔莎 on 2020/11/10.
+//  Created by zhangchong on 2020/11/10.
 //
 
 #import "EaseUserProfile.h"
@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) BOOL isNoDistrub;
 @property (nonatomic) BOOL isTop;
-@property (nonatomic, copy, readonly) NSAttributedString *showInfo;
+@property (nonatomic, copy, readonly) NSAttributedString *showInfo; // conversaion latest message info
 //@property (nonatomic, copy) NSString *draft;
 
 @end

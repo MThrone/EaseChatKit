@@ -28,7 +28,7 @@
 
 @property (nonatomic, strong) EaseMessageStatusView *statusView;
 
-@property (nonatomic, strong) UIButton *readReceiptBtn;//阅读回执按钮
+@property (nonatomic, strong) UIButton *readReceiptBtn;
 
 @property (nonatomic, strong) EaseChatViewModel *viewModel;
 
@@ -375,7 +375,7 @@
     }
 }
 
-//头像点击
+//Avatar click
 - (void)avatarDidSelect:(UITapGestureRecognizer *)aTap
 {
     if (aTap.state == UIGestureRecognizerStateEnded) {
@@ -384,7 +384,8 @@
         }
     }
 }
-//头像长按
+
+//Avatar longPress
 - (void)avatarLongPressAction:(UILongPressGestureRecognizer *)aLongPress
 {
     if (aLongPress.state == UIGestureRecognizerStateBegan) {
@@ -393,7 +394,8 @@
         }
     }
 }
-//气泡点击
+
+//Bubble view click
 - (void)bubbleViewTapAction:(UITapGestureRecognizer *)aTap
 {
     if (aTap.state == UIGestureRecognizerStateEnded) {
@@ -402,7 +404,8 @@
         }
     }
 }
-//气泡长按
+
+//Bubble view longPress
 - (void)bubbleViewLongPressAction:(UILongPressGestureRecognizer *)aLongPress
 {
     if (aLongPress.state == UIGestureRecognizerStateBegan) {

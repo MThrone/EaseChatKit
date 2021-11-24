@@ -45,7 +45,7 @@ AgoraChatClientDelegate
 @property (nonatomic, strong) NSMutableArray<EaseConversationModel *> *dataAry;
 @property (nonatomic) id <EaseConversationsViewControllerDelegate> delegate;
 - (instancetype)initWithModel:(EaseConversationViewModel *)aModel;
-//reset data source
+//reset user profiles
 - (void)resetUserProfiles:(NSArray<id<EaseUserProfile>> *)userProfileAry;
 //reset viewmodel
 - (void)resetConversationVCWithViewModel:(EaseConversationViewModel *)viewModel;

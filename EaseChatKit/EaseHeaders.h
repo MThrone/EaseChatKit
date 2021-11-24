@@ -12,7 +12,6 @@
 #import "EaseDefines.h"
 #import "EaseAlertController.h"
 #import "EaseAlertView.h"
-//#import "EaseEmojiHelper.h"
 #import "UIViewController+HUD.h"
 #import "UIColor+EaseUI.h"
 #import "UIImage+EaseUI.h"

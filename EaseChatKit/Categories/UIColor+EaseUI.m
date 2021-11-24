@@ -16,14 +16,14 @@
     if ([cString length] < 6) {
         return [UIColor clearColor];
     }
-    // 判断前缀
+    // prefix
     if ([cString hasPrefix:@"0X"])
         cString = [cString substringFromIndex:2];
     if ([cString hasPrefix:@"#"])
         cString = [cString substringFromIndex:1];
     if ([cString length] != 6)
         return [UIColor clearColor];
-    // 从六位数值中找到RGB对应的位数并转换
+    // Find the RGB corresponding digit from the six-digit value and convert it
     NSRange range;
     range.location = 0;
     range.length = 2;

@@ -2,8 +2,8 @@
 //  EMPickFileViewController.m
 //  EaseIM
 //
-//  Created by 娜塔莎 on 2020/1/3.
-//  Copyright © 2020 娜塔莎. All rights reserved.
+//  Created by zhangchong on 2020/1/3.
+//  Copyright © 2020 zhangchong. All rights reserved.
 //
 
 #import "EMPickFileViewController.h"
@@ -13,11 +13,11 @@
 
 @interface EMPickFileViewController ()
 
-@property (nonatomic, strong) UIButton *recentBtn;//最近
-@property (nonatomic, strong) UIButton *localBtn;//本机
-@property (nonatomic, strong) UIView *localMediaView;//本机媒体
-@property (nonatomic, strong) UIButton *avBtn;//影音
-@property (nonatomic, strong) UIButton *picBtn;//图片
+@property (nonatomic, strong) UIButton *recentBtn;//recent
+@property (nonatomic, strong) UIButton *localBtn;//local
+@property (nonatomic, strong) UIView *localMediaView;//local media
+@property (nonatomic, strong) UIButton *avBtn;//AV
+@property (nonatomic, strong) UIButton *picBtn;//image
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @end
@@ -49,7 +49,7 @@
     CGFloat location = self.view.frame.size.width / 2;
     
     self.recentBtn = [[UIButton alloc]init];
-    [self.recentBtn setTitle:@"最近" forState:UIControlStateNormal];
+    [self.recentBtn setTitle:@"Recent" forState:UIControlStateNormal];
     self.recentBtn.backgroundColor = [UIColor lightGrayColor];
     self.recentBtn.titleLabel.textColor = [UIColor blackColor];
     [self.localMediaView addSubview:self.recentBtn];
@@ -62,7 +62,7 @@
     }];
     
     self.localBtn = [[UIButton alloc]init];
-    [self.localBtn setTitle:@"本机" forState:UIControlStateNormal];
+    [self.localBtn setTitle:@"Local" forState:UIControlStateNormal];
     self.localBtn.backgroundColor = [UIColor lightGrayColor];
     self.localBtn.titleLabel.textColor = [UIColor blackColor];
     [self.localMediaView addSubview:self.localBtn];
@@ -82,7 +82,7 @@
     CGFloat width = (self.view.frame.size.width)/2;
     
     self.avBtn = [[UIButton alloc]init];
-    [_avBtn setTitle:@"影音" forState:UIControlStateNormal];
+    [_avBtn setTitle:@"AV" forState:UIControlStateNormal];
     [_avBtn setTitleColor:[UIColor colorWithRed:4/255.0 green:174/255.0 blue:240/255.0 alpha:1.0] forState:UIControlStateNormal];
     _avBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     _avBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -97,7 +97,7 @@
     }];
 
     self.picBtn = [[UIButton alloc]init];
-    [_picBtn setTitle:@"图片" forState:UIControlStateNormal];
+    [_picBtn setTitle:@"Picture" forState:UIControlStateNormal];
     _picBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     _picBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
     [_picBtn setTitleColor:[UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1.0] forState:UIControlStateNormal];

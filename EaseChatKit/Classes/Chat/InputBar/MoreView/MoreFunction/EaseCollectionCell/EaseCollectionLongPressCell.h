@@ -2,7 +2,7 @@
 //  EaseCollectionLongPressCell.h
 //  EaseChatKit
 //
-//  Created by 娜塔莎 on 2020/12/11.
+//  Created by zhangchong on 2020/12/11.
 //  Copyright © 2020 djp. All rights reserved.
 //
 

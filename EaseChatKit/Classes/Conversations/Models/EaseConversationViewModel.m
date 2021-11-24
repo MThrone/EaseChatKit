@@ -2,7 +2,7 @@
 //  EaseConversationViewModel.m
 //  EaseChatKit
 //
-//  Created by 娜塔莎 on 2020/11/12.
+//  Created by zhangchong on 2020/11/12.
 //
 
 #import "EaseConversationViewModel.h"

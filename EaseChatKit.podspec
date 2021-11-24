@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
     s.name             = 'EaseChatKit'
     s.version          = '3.8.7'
-    s.summary = 'easemob im sdk UIKit'
+    s.summary = 'agora im sdk UIKit'
     s.homepage = 'http://docs-im.easemob.com/im/ios/other/easechatkit'
     s.description = <<-DESC
                     EaseChatKit Supported features:
@@ -11,9 +11,9 @@ Pod::Spec.new do |s|
                     3. Contact list
                   DESC
     s.license          = { :type => 'MIT', :file => 'LICENSE' }
-    s.author           = { 'easemob' => 'dev@easemob.com' }
+    s.author           = { 'agora' => 'dev@agora.com' }
     #s.source = { :git => 'https://github.com/easemob/easeui_ios.git', :tag => 'EaseChatKit_3.8.7'}
-    s.source = { :git => 'https://github.com/MThrone/easeui_ios.git', :tag => 'EaseChatKit'}
+    s.source = { :git => 'https://github.com/MThrone/EaseChatKit.git', :tag => 'EaseChatKit_1.1.0'}
     s.frameworks = 'UIKit'
     s.libraries = 'stdc++'
     s.ios.deployment_target = '10.0'

@@ -2,8 +2,8 @@
 //  EMChatroomViewController.m
 //  EaseIM
 //
-//  Created by 娜塔莎 on 2020/7/9.
-//  Copyright © 2020 娜塔莎. All rights reserved.
+//  Created by zhangchong on 2020/7/9.
+//  Copyright © 2020 zhangchong. All rights reserved.
 //
 
 #import "EMChatroomViewController.h"
@@ -36,11 +36,11 @@
 - (void)_joinChatroom
 {
     __weak typeof(self) weakself = self;
-    [self showHudInView:self.view hint:@"加入聊天室..."];
+    [self showHudInView:self.view hint:@"join chatroom..."];
     [[AgoraChatClient sharedClient].roomManager joinChatroom:self.currentConversation.conversationId completion:^(AgoraChatroom *aChatroom, AgoraChatError *aError) {
         [weakself hideHud];
         if (aError) {
-            [EaseAlertController showErrorAlert:@"加入聊天室失败"];
+            [EaseAlertController showErrorAlert:@"join chatroom fail."];
         }
     }];
 }

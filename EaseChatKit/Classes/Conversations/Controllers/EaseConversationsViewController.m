@@ -288,7 +288,6 @@ static NSString *cellIdentifier = @"EaseConversationCell";
     [self _loadAllConversationsFromDB];
 }
 
-//　收到已读回执
 - (void)messagesDidRead:(NSArray *)aMessages
 {
     [self refreshTable];
@@ -296,7 +295,6 @@ static NSString *cellIdentifier = @"EaseConversationCell";
 
 #pragma mark - UIMenuController
 
-//删除会话
 - (void)_deleteConversation:(NSIndexPath *)indexPath
 {
     __weak typeof(self) weakSelf = self;

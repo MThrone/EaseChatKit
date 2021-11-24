@@ -86,7 +86,8 @@
                                     NSStrikethroughColorAttributeName: [UIColor orangeColor]
                                     } range:NSMakeRange(0, 3)];
     [attaStr appendAttributedString:throughlineStr];*/
-    //超链接
+    
+    //Hyperlinks
     NSDataDetector *detector= [[NSDataDetector alloc] initWithTypes:NSTextCheckingTypeLink error:nil];
     NSArray *checkArr = [detector matchesInString:text options:0 range:NSMakeRange(0, text.length)];
     for (NSTextCheckingResult *result in checkArr) {

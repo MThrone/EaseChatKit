@@ -2,7 +2,7 @@
 //  UIViewController+ComponentSize.m
 //  EaseChatKit
 //
-//  Created by 娜塔莎 on 2020/11/25.
+//  Created by zhangchong on 2020/11/25.
 //
 
 #import "UIViewController+ComponentSize.h"
@@ -11,12 +11,12 @@
 
 - (void)keyBoardWillShow:(NSNotification *)note animations:(void (^)(void))animations completion:(void (^ __nullable)(BOOL finished, CGRect keyBoardBounds))completion
 {
-    // 获取用户信息
+    // Obtaining User information
     NSDictionary *userInfo = [NSDictionary dictionaryWithDictionary:note.userInfo];
-    // 获取键盘高度
+    // Get keyboard height
     CGRect keyBoardBounds  = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     //CGFloat keyBoardHeight = keyBoardBounds.size.height;
-    // 获取键盘动画时间
+    // Get keyboard animation time
     CGFloat animationTime  = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     
     if (animationTime > 0) {
@@ -32,9 +32,9 @@
 
 - (void)keyBoardWillHide:(NSNotification *)note animations:(void (^)(void))animations completion:(void (^ __nullable)(BOOL finished))completion
 {
-    // 获取用户信息
+    // Obtaining User information
     NSDictionary *userInfo = [NSDictionary dictionaryWithDictionary:note.userInfo];
-    // 获取键盘动画时间
+    // Get keyboard animation time
     CGFloat animationTime  = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     
     if (animationTime > 0) {
@@ -48,7 +48,7 @@
     }
 }
 
-//刘海高度
+//Bang height
 - (CGFloat)bangScreenSize {
      if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
          return 0;

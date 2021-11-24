@@ -240,11 +240,4 @@
     self.badgeLabel.backgroundColor = _viewModel.badgeLabelBgColor;
 }
 
-- (void)resetViewModel:(EaseConversationViewModel *)aViewModel {
-    _viewModel = aViewModel;
-    [self _addSubViews];
-    [self _setupSubViewsConstraints];
-    [self _setupViewsProperty];
-}
-
 @end

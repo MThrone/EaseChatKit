@@ -2,8 +2,8 @@
 //  EMSingleChatViewController.m
 //  EaseIM
 //
-//  Created by 娜塔莎 on 2020/7/9.
-//  Copyright © 2020 娜塔莎. All rights reserved.
+//  Created by zhangchong on 2020/7/9.
+//  Copyright © 2020 zhangchong. All rights reserved.
 //
 
 #import "EMSingleChatViewController.h"
@@ -122,7 +122,7 @@
     });
 }
 
-//收到 CMD 消息
+//CMD message received
 - (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages
 {
     NSString *conId = self.currentConversation.conversationId;
@@ -148,7 +148,7 @@
             if ([obj isKindOfClass:[EaseMessageModel class]]) {
                 EaseMessageModel *model = (EaseMessageModel *)obj;
                 if ([model.message.messageId isEqualToString:msg.messageId]) {
-                    AgoraChatTextMessageBody *body = [[AgoraChatTextMessageBody alloc] initWithText:@"对方撤回一条消息"];
+                    AgoraChatTextMessageBody *body = [[AgoraChatTextMessageBody alloc] initWithText:@"The other party retracted a message"];
                     NSString *to = [[AgoraChatClient sharedClient] currentUsername];
                     NSString *from = self.currentConversation.conversationId;
                     AgoraChatMessage *message = [[AgoraChatMessage alloc] initWithConversationID:from from:from to:to body:body ext:@{MSG_EXT_RECALL:@(YES)}];
@@ -187,7 +187,7 @@
     return [[NSNumber numberWithDouble:timeInterval] longLongValue];
 }
 
-//正在输入状态
+//Typing
 - (void)_sendBeginTyping
 {
     NSString *from = [[AgoraChatClient sharedClient] currentUsername];
@@ -224,7 +224,7 @@
 
 #pragma - mark Timer
 
-//接收对方正在输入状态计时
+//The receiving party is timing the input status
 - (void)startReceiveCountDown
 {
     if (_receiveTypingCountDownNum == 0) {
@@ -241,7 +241,7 @@
     [self stopReceiveTypingTimer];
     _receiveTypingCountDownNum = TypingTimerCountNum;
     _receiveTypingTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(startReceiveCountDown) userInfo:nil repeats:YES];
-    // TODO: chong.
+
     [[NSRunLoop currentRunLoop] addTimer:_receiveTypingTimer forMode:UITrackingRunLoopMode];
     [_receiveTypingTimer fire];
     if (self.delegate && [self.delegate respondsToSelector:@selector(beginTyping)]) {

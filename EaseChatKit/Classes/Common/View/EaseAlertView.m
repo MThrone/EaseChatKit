@@ -2,8 +2,8 @@
 //  EaseAlertView.m
 //  EaseIM
 //
-//  Created by 娜塔莎 on 2020/9/27.
-//  Copyright © 2020 娜塔莎. All rights reserved.
+//  Created by zhangchong on 2020/9/27.
+//  Copyright © 2020 zhangchong. All rights reserved.
 //
 
 #import "EaseAlertView.h"
@@ -21,7 +21,7 @@
 - (instancetype)initWithTitle:(NSString *)title message:(NSString *)message
 {
     if (self = [super init]) {
-        _title = (title && [title length] > 0) ? title : @"提示";
+        _title = (title && [title length] > 0) ? title : @"Hint";
         _message = message;
     }
     return self;
@@ -89,7 +89,7 @@
     UIButton *confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [confirmBtn addTarget:self action:@selector(confirmAction) forControlEvents:UIControlEventTouchUpInside];
     confirmBtn.layer.cornerRadius = 10;
-    [confirmBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [confirmBtn setTitle:@"Confirm" forState:UIControlStateNormal];
     [confirmBtn.titleLabel setFont:[UIFont systemFontOfSize:16.f]];
     [confirmBtn setTitleColor:[UIColor systemBlueColor] forState:UIControlStateNormal];
     [backView addSubview:confirmBtn];

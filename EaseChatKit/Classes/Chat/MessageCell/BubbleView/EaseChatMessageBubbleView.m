@@ -36,10 +36,10 @@
     
     UIEdgeInsets edge = UIEdgeInsetsMake(_viewModel.bubbleBgEdgeInset.top, _viewModel.bubbleBgEdgeInset.left, _viewModel.bubbleBgEdgeInset.bottom, _viewModel.bubbleBgEdgeInset.right);
     if (self.direction == AgoraChatMessageDirectionSend) {
-        UIImage *image = [_viewModel.sendBubbleBgPicture resizableImageWithCapInsets:edge resizingMode:UIImageResizingModeStretch];
+        UIImage *image = [_viewModel.sendBubbleBgImage resizableImageWithCapInsets:edge resizingMode:UIImageResizingModeStretch];
         [self setImage:image];
     } else {
-        UIImage *image = [_viewModel.receiveBubbleBgPicture resizableImageWithCapInsets:edge resizingMode:UIImageResizingModeStretch];
+        UIImage *image = [_viewModel.receiveBubbleBgImage resizableImageWithCapInsets:edge resizingMode:UIImageResizingModeStretch];
         [self setImage:image];
     }
 }
@@ -54,7 +54,7 @@
     self.clipsToBounds = NO;
 }
 
-//切圆角函数
+//cornerRadius
 - (CGPathRef)CYPathCreateWithRoundedRect:(CGRect)bounds
 {
     BubbleCornerRadius cornerRadius = self.direction == AgoraChatMessageDirectionSend ? self.viewModel.rightAlignmentCornerRadius : self.viewModel.leftAlignmentCornerRadius;
@@ -75,16 +75,15 @@
     
     const CGFloat topRightCenterX = maxX - cornerRadius.topRight;
     const CGFloat topRightCenterY = minY + cornerRadius.topRight;
-    //虽然顺时针参数是YES，在iOS中的UIView中，这里实际是逆时针
      
     CGMutablePathRef path = CGPathCreateMutable();
-    //顶 左
+    
     CGPathAddArc(path, NULL, topLeftCenterX, topLeftCenterY,cornerRadius.topLeft, M_PI, 3 * M_PI_2, NO);
-    //顶 右
+ 
     CGPathAddArc(path, NULL, topRightCenterX , topRightCenterY, cornerRadius.topRight, 3 * M_PI_2, 0, NO);
-    //底 右
+  
     CGPathAddArc(path, NULL, bottomRightCenterX, bottomRightCenterY, cornerRadius.bottomRight,0, M_PI_2, NO);
-    //底 左
+ 
     CGPathAddArc(path, NULL, bottomLeftCenterX, bottomLeftCenterY, cornerRadius.bottomLeft, M_PI_2,M_PI, NO);
     CGPathCloseSubpath(path);
     return path;

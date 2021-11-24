@@ -30,10 +30,10 @@
 
 @property (nonatomic, strong) UIButton *selectedButton;
 @property (nonatomic, strong) UIView *currentMoreView;
-@property (nonatomic, strong) UIButton *conversationToolBarBtn;//更多
-@property (nonatomic, strong) UIButton *emojiButton;//表情
-@property (nonatomic, strong) UIButton *audioButton;//语音
-@property (nonatomic, strong) UIView *bottomLine;//下划线
+@property (nonatomic, strong) UIButton *conversationToolBarBtn;
+@property (nonatomic, strong) UIButton *emojiButton;
+@property (nonatomic, strong) UIButton *audioButton;
+@property (nonatomic, strong) UIView *bottomLine;
 //@property (nonatomic, strong) UIButton *audioDescBtn;
 @property (nonatomic, strong) EaseChatViewModel *viewModel;
 @property (nonatomic, strong) NSMutableArray<EaseExtMenuModel*> *attachmentModelArray;
@@ -398,7 +398,7 @@
     return isEditing;
 }
 
-//语音
+//audio
 - (void)audioButtonAction:(UIButton *)aButton
 {
     if([self _buttonAction:aButton]) {
@@ -423,7 +423,7 @@
     }
 }
 
-//表情
+//emotion
 - (void)emoticonButtonAction:(UIButton *)aButton
 {
     if([self _buttonAction:aButton]) {
@@ -449,7 +449,7 @@
     }
 }
 
-//更多
+//ext 
 - (void)moreButtonAction:(UIButton *)aButton
 {
     if([self _buttonAction:aButton]) {

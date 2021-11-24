@@ -2,8 +2,8 @@
 //  EMGroupChatViewController.m
 //  EaseIM
 //
-//  Created by 娜塔莎 on 2020/7/9.
-//  Copyright © 2020 娜塔莎. All rights reserved.
+//  Created by zhangchong on 2020/7/9.
+//  Copyright © 2020 zhangchong. All rights reserved.
 //
 
 #import "EMGroupChatViewController.h"
@@ -45,7 +45,7 @@
 
 #pragma mark - EaseMessageCellDelegate
 
-//阅读回执详情
+//Read the receipt details
 - (void)messageReadReceiptDetil:(EaseMessageCell *)aCell
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(groupMessageReadReceiptDetail:groupId:)]) {
@@ -68,7 +68,7 @@
 
 #pragma mark - EMChatManagerDelegate
 
-//收到群消息已读回执
+//Received the group message read receipt
 - (void)groupMessageDidRead:(AgoraChatMessage *)aMessage groupAcks:(NSArray *)aGroupAcks
 {
     EaseMessageModel *msgModel;
@@ -92,7 +92,6 @@
 
 #pragma mark - EMGroupManagerDelegate
 
-//有用户加入群组
 - (void)userDidJoinGroup:(AgoraChatGroup *)aGroup
                     user:(NSString *)aUsername
 {
