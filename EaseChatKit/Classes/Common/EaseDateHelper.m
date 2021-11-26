@@ -79,7 +79,7 @@ static EaseDateHelper *shared = nil;
 - (NSDateFormatter *)dfYesterdayHM
 {
     if (_dfYesterdayHM == nil) {
-        _dfYesterdayHM = [self _getDateFormatterWithFormat:@"昨天HH:mm"];
+        _dfYesterdayHM = [self _getDateFormatterWithFormat:@"HH:mm"];
     }
     
     return _dfYesterdayHM;
@@ -88,7 +88,7 @@ static EaseDateHelper *shared = nil;
 - (NSDateFormatter *)dfBeforeDawnHM
 {
     if (_dfBeforeDawnHM == nil) {
-        _dfBeforeDawnHM = [self _getDateFormatterWithFormat:@"凌晨hh:mm"];
+        _dfBeforeDawnHM = [self _getDateFormatterWithFormat:@"hh:mm"];
     }
     
     return _dfBeforeDawnHM;
@@ -97,7 +97,7 @@ static EaseDateHelper *shared = nil;
 - (NSDateFormatter *)dfAAHM
 {
     if (_dfAAHM == nil) {
-        _dfAAHM = [self _getDateFormatterWithFormat:@"上午hh:mm"];
+        _dfAAHM = [self _getDateFormatterWithFormat:@"hh:mm"];
     }
     
     return _dfAAHM;
@@ -106,7 +106,7 @@ static EaseDateHelper *shared = nil;
 - (NSDateFormatter *)dfPPHM
 {
     if (_dfPPHM == nil) {
-        _dfPPHM = [self _getDateFormatterWithFormat:@"下午hh:mm"];
+        _dfPPHM = [self _getDateFormatterWithFormat:@"hh:mm"];
     }
     
     return _dfPPHM;
@@ -115,7 +115,7 @@ static EaseDateHelper *shared = nil;
 - (NSDateFormatter *)dfNightHM
 {
     if (_dfNightHM == nil) {
-        _dfNightHM = [self _getDateFormatterWithFormat:@"晚上hh:mm"];
+        _dfNightHM = [self _getDateFormatterWithFormat:@"hh:mm"];
     }
     
     return _dfNightHM;
@@ -167,31 +167,40 @@ static EaseDateHelper *shared = nil;
     NSRange containsA = [formatStringForHours rangeOfString:@"a"];
     BOOL hasAMPM = containsA.location != NSNotFound;
     
+    NSString *ts = @"";
+    
     if (!hasAMPM) { //24-hour clock
         if (hour <= 24 && hour >= 0) {
             dateFormatter = helper.dfHM;
         } else if (hour < 0 && hour >= -24) {
             dateFormatter = helper.dfYesterdayHM;
+            ts = @"Yday";
         } else {
             dateFormatter = helper.dfYMDHM;
         }
     } else {
         if (hour >= 0 && hour <= 6) {
             dateFormatter = helper.dfBeforeDawnHM;
+            ts = @"Morn";
         } else if (hour > 6 && hour <= 11 ) {
             dateFormatter = helper.dfAAHM;
+            ts = @"AM";
         } else if (hour > 11 && hour <= 17) {
             dateFormatter = helper.dfPPHM;
+            ts = @"PM";
         } else if (hour > 17 && hour <= 24) {
             dateFormatter = helper.dfNightHM;
+            ts = @"Night";
         } else if (hour < 0 && hour >= -24) {
             dateFormatter = helper.dfYesterdayHM;
+            ts = @"Yday";
         } else {
             dateFormatter = helper.dfYMDHM;
         }
     }
     
     ret = [dateFormatter stringFromDate:aDate];
+    ret = [NSString stringWithFormat:@"%@%@", ts, ret];
     return ret;
 }
 
