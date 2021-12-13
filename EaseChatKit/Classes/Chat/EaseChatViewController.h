@@ -8,11 +8,11 @@
 
 #import "EaseChatViewModel.h"
 #import "EaseChatViewControllerDelegate.h"
-#import "EaseInputBar.h"
+#import "EaseInputMenu.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface EaseChatViewController : UIViewController <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIDocumentInteractionControllerDelegate, AgoraChatManagerDelegate, EaseInputBarDelegate, EaseMessageCellDelegate, EaseChatInputBarEmoticonViewDelegate, EaseInputBarRecordAudioViewDelegate>
+@interface EaseChatViewController : UIViewController <UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource, UIDocumentInteractionControllerDelegate, AgoraChatManagerDelegate, EaseInputMenuDelegate, EaseMessageCellDelegate, EaseInputMenuEmoticonViewDelegate, EaseInputMenuRecordAudioViewDelegate>
 
 @property (nonatomic, weak) id<EaseChatViewControllerDelegate> delegate;
 
@@ -26,17 +26,17 @@ NS_ASSUME_NONNULL_BEGIN
                                   conversationType:(AgoraChatConversationType)aType
                                      chatViewModel:(EaseChatViewModel *)aModel;
 
-// Resetting the data source
-- (void)resetUserProfiles:(NSArray<id<EaseUserProfile>> *)userProfileAry;
+// Set user profiles
+- (void)setUserProfiles:(NSArray<id<EaseUserProfile>> *)userProfileAry;
 
-// Reset the chat controller view
-- (void)resetChatVCWithViewModel:(EaseChatViewModel *)viewModel;
+// Set chat controller view
+- (void)setChatVCWithViewModel:(EaseChatViewModel *)viewModel;
 
 // Setup inputbar
-- (void)setupInputBar:(EaseInputBar *)inputbar;
+- (void)setupInputMenu:(EaseInputMenu *)inputbar;
 
-// Sets whether to display input status
-- (void)setEditingStatusVisible:(BOOL)editingStatusVisible;
+// Set whether to display typing indicator
+- (void)setTypingIndicator:(BOOL)typingIndicator;
 
 // Sending text messages
 - (void)sendTextAction:(NSString *)aText ext:(NSDictionary * __nullable)aExt;
@@ -50,11 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 // Refresh tableview.
 //      isScrollBottom:Whether the list scrolls to the bottom (at the latest message)
 - (void)refreshTableView:(BOOL)isScrollBottom;
-
-// Refresh tableview with messaegs.
-//      isInsertBottom:Whether the message is inserted to the tail (header by default)
-//      isScrollBottom:Whether the list scrolls to the bottom (at the latest message)
-- (void)refreshTableViewWithData:(NSArray<AgoraChatMessage *> *)messages isInsertBottom:(BOOL)isInsertBottom isScrollBottom:(BOOL)isScrollBottom;
 
 // Clear other controller pages that pop up from the chat page (for example, clean album popup page, picture browsing page, input expansion area, etc.)
 - (void)cleanPopupControllerView;

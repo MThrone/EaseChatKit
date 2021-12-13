@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EaseChatViewController (EMMsgLongPressIncident)
 
-//长按操作栏
 @property (strong, nonatomic) NSIndexPath *__nullable longPressIndexPath;
 
 - (void)deleteLongPressAction:(void (^)(AgoraChatMessage *deleteMsg))aCompletionBlock;

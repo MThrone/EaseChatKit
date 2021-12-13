@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "EaseUserProfile.h"
 #import "EaseMessageModel.h"
-#import "EaseExtMenuModel.h"
+#import "EaseExtendMenuModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,13 +22,15 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Return user profile
  *
+ * @discussion Users according to huanxinID in their own user system to match the corresponding user information, and return the corresponding information, otherwise the default implementation
+ *
  * @param   huanxinID        huanxin ID
  *
  */
-- (id<EaseUserProfile>)userProfile:(NSString *)huanxinID;
+- (id<EaseUserProfile>)userProfile:(NSString *)userID;
 
 /**
- * Avatar click event
+ * Avatar selected event
  *
  * @param   userData        The profile of the user pointed to by the currently clicked avatar
  *
@@ -44,16 +46,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)avatarDidLongPress:(id<EaseUserProfile>)userData;
 
 /**
- * Group notification receipt details
- *
- * @param   message        Current group notification message
- * @param   groupId        ID of the group to which the current message belongs
- *
- */
-- (void)groupMessageReadReceiptDetail:(AgoraChatMessage *)message groupId:(NSString*)groupId;
-
-/**
  * Custom cell
+ *
+ * @param tableView        Current Message view tableView
+ * @param messageModel     Message data model
+ *
  */
 - (UITableViewCell *)cellForItem:(UITableView *)tableView messageModel:(EaseMessageModel *)messageModel;
 
@@ -64,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param   customCell                  Current long - pressed custom cell
  *
  */
-- (NSMutableArray<EaseExtMenuModel *> *)customCellLongPressExtMenuItemArray:(NSMutableArray<EaseExtMenuModel*>*)defaultLongPressItems customCell:(UITableViewCell*)customCell;
+- (NSMutableArray<EaseExtendMenuModel *> *)customCellLongPressExtMenuItemArray:(NSMutableArray<EaseExtendMenuModel*>*)defaultLongPressItems customCell:(UITableViewCell*)customCell;
 
 
 /* Input view callback */
@@ -93,21 +90,25 @@ NS_ASSUME_NONNULL_BEGIN
  * @param   conversationType            Current session type: single chat, group chat, chat room
  *
  */
-- (NSMutableArray<EaseExtMenuModel *> *)inputBarExtMenuItemArray:(NSMutableArray<EaseExtMenuModel*>*)defaultInputBarItems conversationType:(AgoraChatConversationType)conversationType;
+- (NSMutableArray<EaseExtendMenuModel *> *)inputBarExtMenuItemArray:(NSMutableArray<EaseExtendMenuModel*>*)defaultInputBarItems conversationType:(AgoraChatConversationType)conversationType;
+
 /**
  * Input area Keyboard input change callback example: @ group member
+ *
+ * @brief Input area Keyboard input change callback example: @ group member
+ *
  */
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
+- (BOOL)textViewShouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
 
 /**
- * The other party is typing
+ * 1v1 single chat Peer typing
  */
-- (void)beginTyping;
+- (void)peerTyping;
 
 /**
- * End of input
+ * 1v1 single chat Peer end typing
  */
-- (void)endTyping;
+- (void)peerEndTyping;
 
 
 /* Message event callback */
@@ -128,19 +129,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param   message                     Current long-press message
  *
  */
-- (NSMutableArray<EaseExtMenuModel *> *)messageLongPressExtMenuItemArray:(NSMutableArray<EaseExtMenuModel*>*)defaultLongPressItems message:(AgoraChatMessage*)message;
-
-
-/* Page dropdown load callback */
-
-/**
- * Drop down to load more message callbacks
- *
- * @param   firstMessageId          First Message ID
- * @param   messageList             Current Message list
- *
- */
-- (void)loadMoreMessageData:(NSString *)firstMessageId currentMessageList:(NSArray<AgoraChatMessage *> *)messageList;
+- (NSMutableArray<EaseExtendMenuModel *> *)messageLongPressExtMenuItemArray:(NSMutableArray<EaseExtendMenuModel*>*)defaultLongPressItems message:(AgoraChatMessage*)message;
 
 @end
 

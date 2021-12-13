@@ -47,7 +47,7 @@
     if (self) {
         _direction = aDirection;
         _viewModel = viewModel;
-        if (_viewModel.msgAlignmentStyle == EaseAlignmentlLeft && aChatType == AgoraChatTypeGroupChat) {
+        if (_viewModel.msgAlignmentStyle == EaseAlignmentlAll_Left) {
             _direction = AgoraChatMessageDirectionReceive;
         }
         [self _setupViewsWithType:aMessageType chatType:aChatType];
@@ -137,17 +137,17 @@
     
     CGFloat width = self.bounds.size.width;
     CGFloat bubbleViewWidth = self.contentView.bounds.size.width - 4 * componentSpacing;
-    if (_viewModel.displayOtherAvatar) {
+    if (_viewModel.displayReceivedAvatar) {
         bubbleViewWidth -= (avatarLonger + componentSpacing);
     }
-    if (_viewModel.displayOneselfAvatar) {
+    if (_viewModel.displaySentAvatar) {
         bubbleViewWidth -= (avatarLonger + componentSpacing);
     };
     
     self.bubbleView.maxBubbleWidth = bubbleViewWidth * 0.8;
     
     if (self.direction == AgoraChatMessageDirectionReceive) {
-        if (_viewModel.displayOtherAvatar) {
+        if (_viewModel.displayReceivedAvatar) {
             [_avatarView Ease_makeConstraints:^(EaseConstraintMaker *make) {
                 make.bottom.equalTo(self.contentView).offset(-componentSpacing);
                 make.left.equalTo(self.contentView).offset(2 * componentSpacing);
@@ -156,11 +156,11 @@
         }
         
         [_bubbleView Ease_makeConstraints:^(EaseConstraintMaker *make) {
-            if (!_viewModel.displayOtherName) {
+            if (!_viewModel.displayReceiverName) {
                 make.top.equalTo(self.contentView).offset(componentSpacing);
             }
             make.bottom.equalTo(self.contentView).offset(-componentSpacing);
-            if (_viewModel.displayOtherAvatar) {
+            if (_viewModel.displayReceivedAvatar) {
                 make.left.equalTo(self.avatarView.ease_right).offset(componentSpacing);
             } else {
                 make.left.equalTo(self.contentView).offset(2 * componentSpacing);
@@ -174,11 +174,11 @@
         }];
 
         _nameLabel.textAlignment = NSTextAlignmentLeft;
-        if (_viewModel.displayOtherName) {
+        if (_viewModel.displayReceiverName) {
             [_nameLabel Ease_makeConstraints:^(EaseConstraintMaker *make) {
                 make.top.equalTo(self.contentView).offset(componentSpacing);
                 make.bottom.equalTo(self.bubbleView.ease_top).offset(-componentSpacing / 2);
-                if (_viewModel.displayOtherAvatar) {
+                if (_viewModel.displayReceivedAvatar) {
                     make.left.equalTo(self.avatarView.ease_right).offset(2 * componentSpacing);
                 } else {
                     make.left.equalTo(self.contentView).offset(2 * componentSpacing);
@@ -187,7 +187,7 @@
             }];
         }
     } else {
-        if (_viewModel.displayOneselfAvatar) {
+        if (_viewModel.displaySentAvatar) {
             [_avatarView Ease_makeConstraints:^(EaseConstraintMaker *make) {
                 make.bottom.equalTo(self.contentView).offset(-componentSpacing);
                 make.right.equalTo(self.contentView).offset(-2 * componentSpacing);
@@ -196,11 +196,11 @@
         }
         
         [_bubbleView Ease_makeConstraints:^(EaseConstraintMaker *make) {
-            if (!_viewModel.displayOneselfName) {
+            if (!_viewModel.displaySentName) {
                 make.top.equalTo(self.contentView).offset(componentSpacing);
             }
             make.bottom.equalTo(self.contentView).offset(-componentSpacing);
-            if (_viewModel.displayOneselfAvatar) {
+            if (_viewModel.displaySentAvatar) {
                 make.right.equalTo(self.avatarView.ease_left).offset(-componentSpacing);
             } else {
                 make.right.equalTo(self.contentView).offset(-2 * componentSpacing);
@@ -214,11 +214,11 @@
         }];
         
         _nameLabel.textAlignment = NSTextAlignmentRight;
-        if (_viewModel.displayOneselfName) {
+        if (_viewModel.displaySentName) {
             [_nameLabel Ease_makeConstraints:^(EaseConstraintMaker *make) {
                 make.top.equalTo(self.contentView).offset(componentSpacing);
                 make.bottom.equalTo(self.bubbleView.ease_top).offset(-componentSpacing / 2);
-                if (_viewModel.displayOneselfAvatar) {
+                if (_viewModel.displaySentAvatar) {
                     make.right.equalTo(self.avatarView.ease_left).offset(-2 * componentSpacing);
                 } else {
                     make.right.equalTo(self.contentView).offset(-2 * componentSpacing);
@@ -230,10 +230,10 @@
 
     _statusView = [[EaseMessageStatusView alloc] init];
     [self.contentView addSubview:_statusView];
-    if (self.direction == AgoraChatMessageDirectionSend || (_viewModel.msgAlignmentStyle == EaseAlignmentlLeft && chatType == AgoraChatTypeGroupChat)) {
+    if (self.direction == AgoraChatMessageDirectionSend || (_viewModel.msgAlignmentStyle == EaseAlignmentlAll_Left)) {
         [_statusView Ease_makeConstraints:^(EaseConstraintMaker *make) {
             make.bottom.equalTo(self.bubbleView).offset(-8);
-            if (_viewModel.msgAlignmentStyle == EaseAlignmentlLeft && chatType == AgoraChatTypeGroupChat) {
+            if (_viewModel.msgAlignmentStyle == EaseAlignmentlAll_Left) {
                 make.left.equalTo(self.bubbleView.ease_right).offset(componentSpacing);
             } else {
                 make.right.equalTo(self.bubbleView.ease_left).offset(-componentSpacing);

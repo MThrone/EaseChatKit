@@ -2,7 +2,7 @@
 //  UIImage+EaseUI.h
 //  EaseChatKit
 //
-//  Created by 杜洁鹏 on 2020/11/15.
+//  Created by dujiepeng on 2020/11/15.
 //
 
 #import <UIKit/UIKit.h>

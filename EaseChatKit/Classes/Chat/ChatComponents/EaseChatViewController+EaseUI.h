@@ -2,7 +2,7 @@
 //  EaseChatViewController+EaseUI.h
 //  EaseChatKit
 //
-//  Created by 杜洁鹏 on 2020/12/2.
+//  Created by dujiepeng on 2020/12/2.
 //  Copyright © 2020 djp. All rights reserved.
 //
 

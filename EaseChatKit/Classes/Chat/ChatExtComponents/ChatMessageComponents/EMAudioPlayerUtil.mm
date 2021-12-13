@@ -65,7 +65,7 @@ static EMAudioPlayerUtil *playerUtil = nil;
                                  error:(NSError *)error
 {
     if (self.playerFinished) {
-        NSError *error = [NSError errorWithDomain:@"播放失败!" code:-1 userInfo:nil];
+        NSError *error = [NSError errorWithDomain:@"Playback failed!" code:-1 userInfo:nil];
         self.playerFinished(error);
     }
     
@@ -131,7 +131,7 @@ static EMAudioPlayerUtil *playerUtil = nil;
     do {
         NSFileManager *fm = [NSFileManager defaultManager];
         if (![fm fileExistsAtPath:aPath]) {
-            error = [NSError errorWithDomain:@"文件路径不存在" code:-1 userInfo:nil];
+            error = [NSError errorWithDomain:@"The file path does not exist" code:-1 userInfo:nil];
             break;
         }
         
@@ -143,7 +143,7 @@ static EMAudioPlayerUtil *playerUtil = nil;
         
         aPath = [self _convertAudioFile:aPath];
         if ([aPath length] == 0) {
-            error = [NSError errorWithDomain:@"转换音频格式失败" code:-1 userInfo:nil];
+            error = [NSError errorWithDomain:@"Failed to convert audio format" code:-1 userInfo:nil];
             break;
         }
         
@@ -153,7 +153,7 @@ static EMAudioPlayerUtil *playerUtil = nil;
         self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:wavUrl error:&error];
         if (error || !self.player) {
             self.player = nil;
-            error = [NSError errorWithDomain:@"初始化AVAudioPlayer失败" code:-1 userInfo:nil];
+            error = [NSError errorWithDomain:@"Init AVAudioPlayer fail" code:-1 userInfo:nil];
             break;
         }
         
@@ -173,7 +173,7 @@ static EMAudioPlayerUtil *playerUtil = nil;
         ret = [self.player play];
         if (!ret) {
             [self stopPlayer];
-            error = [NSError errorWithDomain:@"AVAudioPlayer播放失败" code:-1 userInfo:nil];
+            error = [NSError errorWithDomain:@"AVAudioPlayer play fail" code:-1 userInfo:nil];
         }
         
     } while (0);

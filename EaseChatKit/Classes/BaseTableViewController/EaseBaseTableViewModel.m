@@ -2,7 +2,7 @@
 //  EaseBaseTableViewModel.m
 //  EaseChatKit
 //
-//  Created by 杜洁鹏 on 2020/11/11.
+//  Created by dujiepeng on 2020/11/11.
 //
 
 #import "EaseBaseTableViewModel.h"

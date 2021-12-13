@@ -31,6 +31,7 @@
 #import "EaseHeaders.h"
 #import "EaseChatEnums.h"
 #import "UIAlertAction+Custom.h"
+#import "EaseInputMenu+Private.h"
 
 @interface EaseChatViewController ()<EaseMoreFunctionViewDelegate>
 {
@@ -39,12 +40,12 @@
     UITableViewCell *_currentLongPressCustomCell;
     BOOL _isReloadViewWithModel; //Refresh the session page
 }
-@property (nonatomic, strong) EaseExtFunctionView *longPressView;
-@property (nonatomic, strong) EaseInputBar *inputBar;
+@property (nonatomic, strong) EaseExtendMenuView *longPressView;
+@property (nonatomic, strong) EaseInputMenu *inputBar;
 @property (nonatomic, strong) dispatch_queue_t msgQueue;
 @property (nonatomic, strong) NSMutableArray<AgoraChatMessage *> *messageList;
 
-@property (nonatomic, strong) id<EaseUserProfile> oneselfProfile;
+@property (nonatomic, strong) id<EaseUserProfile> sentProfile;
 @property (nonatomic, strong) id<EaseUserProfile> otherProfile;
 @end
 
@@ -91,14 +92,14 @@
         _msgQueue = dispatch_queue_create("emmessage.com", NULL);
         _viewModel = viewModel;
         _isReloadViewWithModel = NO;
-        _oneselfProfile = nil;
+        _sentProfile = nil;
         _otherProfile = nil;
         [EaseChatKitManager.shared setConversationId:_currentConversation.conversationId];
         if (!_viewModel) {
             _viewModel = [[EaseChatViewModel alloc] init];
         }
         
-        _inputBar = [[EaseInputBar alloc] initWithViewModel:_viewModel];
+        _inputBar = [[EaseInputMenu alloc] initWithViewModel:_viewModel];
         _inputBar.delegate = self;
         //Session toolbar
         [self _setupChatBarMoreViews];
@@ -106,7 +107,7 @@
     return self;
 }
 
-- (void)resetUserProfiles:(NSArray<id<EaseUserProfile>> *)userProfileAry
+- (void)setUserProfiles:(NSArray<id<EaseUserProfile>> *)userProfileAry
 {
     if (!userProfileAry || userProfileAry.count == 0) return;
     
@@ -117,8 +118,8 @@
             if ([matchingProfile.easeId isEqualToString:self.currentConversation.conversationId] && !self.otherProfile) {
                 self.otherProfile = matchingProfile;
             }
-            if ([matchingProfile.easeId isEqualToString:self.currentConversation.conversationId] && !self.oneselfProfile) {
-                self.oneselfProfile = matchingProfile;
+            if ([matchingProfile.easeId isEqualToString:self.currentConversation.conversationId] && !self.sentProfile) {
+                self.sentProfile = matchingProfile;
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -131,7 +132,7 @@
                         model.userDataProfile = weakself.otherProfile;
                     }
                     if ([model.message.from isEqualToString:self.currentConversation.conversationId]) {
-                        model.userDataProfile = weakself.oneselfProfile;
+                        model.userDataProfile = weakself.sentProfile;
                     }
                 }
             }
@@ -172,7 +173,7 @@
     });
 }
 
-- (void)resetChatVCWithViewModel:(EaseChatViewModel *)viewModel
+- (void)setChatVCWithViewModel:(EaseChatViewModel *)viewModel
 {
     _viewModel = viewModel;
     _isReloadViewWithModel = YES;
@@ -199,7 +200,7 @@
                 [singleChatProfiles addObject:userProfile];
             }
             if (singleChatProfiles.count > 0) {
-                [self resetUserProfiles:singleChatProfiles];
+                [self setUserProfiles:singleChatProfiles];
             }
         }
     }
@@ -214,6 +215,8 @@
  
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapTableViewAction:)];
     [self.tableView addGestureRecognizer:tap];
+    
+    [self loadData:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -289,32 +292,32 @@
 {
     //voice
     NSString *path = [self getAudioOrVideoPath];
-    EaseInputBarRecordAudioView *recordView = [[EaseInputBarRecordAudioView alloc] initWithRecordPath:path];
+    EaseInputMenuRecordAudioView *recordView = [[EaseInputMenuRecordAudioView alloc] initWithRecordPath:path];
     recordView.delegate = self;
     self.inputBar.recordAudioView = recordView;
     
     //Emoticon
-    EaseChatInputBarEmoticonView *moreEmoticonView = [[EaseChatInputBarEmoticonView alloc] initWithViewHeight:255];
+    EaseInputMenuEmoticonView *moreEmoticonView = [[EaseInputMenuEmoticonView alloc] initWithViewHeight:255];
     moreEmoticonView.delegate = self;
     self.inputBar.moreEmoticonView = moreEmoticonView;
     
     //Extend the functionality
     __weak typeof(self) weakself = self;
-    EaseExtMenuModel *photoAlbumExtModel = [[EaseExtMenuModel alloc]initWithData:[UIImage easeUIImageNamed:@"photo-album"] funcDesc:@"Photo & Video Library" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
+    EaseExtendMenuModel *photoAlbumExtModel = [[EaseExtendMenuModel alloc]initWithData:[UIImage easeUIImageNamed:@"photo-album"] funcDesc:@"Photo & Video Library" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
         [weakself chatToolBarComponentIncidentAction:EMChatToolBarPhotoAlbum];
     }];
-    EaseExtMenuModel *cameraExtModel = [[EaseExtMenuModel alloc]initWithData:[UIImage easeUIImageNamed:@"camera"] funcDesc:@"Camera" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
+    EaseExtendMenuModel *cameraExtModel = [[EaseExtendMenuModel alloc]initWithData:[UIImage easeUIImageNamed:@"camera"] funcDesc:@"Camera" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
         [weakself chatToolBarComponentIncidentAction:EMChatToolBarCamera];
     }];
-    EaseExtMenuModel *fileExtModel = [[EaseExtMenuModel alloc]initWithData:[UIImage easeUIImageNamed:@"attachments"] funcDesc:@"Attachments" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
+    EaseExtendMenuModel *fileExtModel = [[EaseExtendMenuModel alloc]initWithData:[UIImage easeUIImageNamed:@"attachments"] funcDesc:@"Attachments" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
         [weakself chatToolBarFileOpenAction];
     }];
-    NSMutableArray<EaseExtMenuModel*> *extMenuArray = [@[cameraExtModel,photoAlbumExtModel,fileExtModel] mutableCopy];
+    NSMutableArray<EaseExtendMenuModel*> *extMenuArray = [@[cameraExtModel,photoAlbumExtModel,fileExtModel] mutableCopy];
     if (self.delegate && [self.delegate respondsToSelector:@selector(inputBarExtMenuItemArray:conversationType:)]) {
         extMenuArray = [self.delegate inputBarExtMenuItemArray:extMenuArray conversationType:_currentConversation.type];
     }
-    EaseExtFunctionView *moreFunction = [[EaseExtFunctionView alloc]initWithextMenuModelArray:extMenuArray menuViewModel:[[EaseExtMenuViewModel alloc]initWithType:ExtTypeChatBar itemCount:[extMenuArray count] extFuncModel:_viewModel.extFuncModel]];
-    self.inputBar.extFunctionView = moreFunction;
+    EaseExtendMenuView *moreFunction = [[EaseExtendMenuView alloc]initWithextMenuModelArray:extMenuArray menuViewModel:[[EaseExtMenuViewModel alloc]initWithType:ExtTypeChatBar itemCount:[extMenuArray count] extendMenuModel:_viewModel.extendMenuViewModel]];
+    self.inputBar.extendMenuView = moreFunction;
     
     //[self.inputBar setGradientBackgroundWithColors:@[[UIColor whiteColor],[UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:0.8]] locations:@[@0.25] startPoint:CGPointMake(0, 0) endPoint:CGPointMake(1, 0)];
 }
@@ -416,12 +419,12 @@
     [self hideLongPressView];
 }
 
-#pragma mark - EaseInputBarDelegate
+#pragma mark - EaseInputMenuDelegate
 
 - (BOOL)textView:(UITextView *)textView shouldngeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(textView:shouldChangeTextInRange:replacementText:)]) {
-        BOOL isValid = [self.delegate textView:textView shouldChangeTextInRange:range replacementText:text];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(textViewShouldChangeTextInRange:replacementText:)]) {
+        BOOL isValid = [self.delegate textViewShouldChangeTextInRange:range replacementText:text];
         return isValid;
     }
     return YES;
@@ -451,7 +454,7 @@
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    for (EaseExtMenuModel *menuModel in self.inputBar.extFunctionView.extMenuModelArray) {
+    for (EaseExtendMenuModel *menuModel in self.inputBar.extendMenuView.extMenuModelArray) {
         [alertController addAction:[UIAlertAction alertActionWithTitle:menuModel.funcDesc iconImage:menuModel.icon textColor:[UIColor colorWithHexString:@"#000000"] alignment:NSTextAlignmentLeft completion:^{
             if (menuModel.itemDidSelectedHandle) {
                 menuModel.itemDidSelectedHandle(menuModel.funcDesc, YES);
@@ -467,7 +470,7 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-#pragma mark - EaseInputBarRecordAudioViewDelegate
+#pragma mark - EaseInputMenuRecordAudioViewDelegate
 
 - (void)chatBarRecordAudioViewStopRecord:(NSString *)aPath
                               timeLength:(NSInteger)aTimeLength
@@ -481,7 +484,7 @@
     [self sendMessageWithBody:body ext:nil];
 }
 
-#pragma mark - EaseChatInputBarEmoticonViewDelegate
+#pragma mark - EaseInputMenuEmoticonViewDelegate
 
 - (BOOL)didSelectedTextDetele
 {
@@ -529,10 +532,10 @@
     }
     self.longPressIndexPath = [self.tableView indexPathForCell:aCell];
     __weak typeof(self) weakself = self;
-    EaseExtMenuModel *copyExtModel = [[EaseExtMenuModel alloc]initWithData:[UIImage easeUIImageNamed:@"copy"] funcDesc:@"Copy" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
+    EaseExtendMenuModel *copyExtModel = [[EaseExtendMenuModel alloc]initWithData:[UIImage easeUIImageNamed:@"copy"] funcDesc:@"Copy" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
         [weakself copyLongPressAction];
     }];
-    EaseExtMenuModel *deleteExtModel = [[EaseExtMenuModel alloc]initWithData:[UIImage easeUIImageNamed:@"delete"] funcDesc:@"Delete" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
+    EaseExtendMenuModel *deleteExtModel = [[EaseExtendMenuModel alloc]initWithData:[UIImage easeUIImageNamed:@"delete"] funcDesc:@"Delete" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
         [weakself deleteLongPressAction:^(AgoraChatMessage *deleteMsg) {
             if (deleteMsg) {
                 NSUInteger index = [weakself.messageList indexOfObject:deleteMsg];
@@ -549,11 +552,11 @@
             }
         }];
     }];
-    EaseExtMenuModel *recallExtModel = [[EaseExtMenuModel alloc]initWithData:[UIImage easeUIImageNamed:@"unsend"] funcDesc:@"Unsend" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
+    EaseExtendMenuModel *recallExtModel = [[EaseExtendMenuModel alloc]initWithData:[UIImage easeUIImageNamed:@"unsend"] funcDesc:@"Unsend" handle:^(NSString * _Nonnull itemDesc, BOOL isExecuted) {
         [weakself recallLongPressAction];
     }];
     
-    NSMutableArray<EaseExtMenuModel*> *extMenuArray = [[NSMutableArray<EaseExtMenuModel*> alloc]init];
+    NSMutableArray<EaseExtendMenuModel*> *extMenuArray = [[NSMutableArray<EaseExtendMenuModel*> alloc]init];
     BOOL isCustomCell = NO;
     if (![aCell isKindOfClass:[EaseMessageCell class]]) {
         [extMenuArray addObject:recallExtModel];
@@ -584,7 +587,7 @@
         return;
     }
 
-    self.longPressView = [[EaseExtFunctionView alloc]initWithextMenuModelArray:extMenuArray menuViewModel:[[EaseExtMenuViewModel alloc]initWithType:isCustomCell ? ExtTypeCustomCellLongPress : ExtTypeLongPress itemCount:[extMenuArray count] extFuncModel:_viewModel.extFuncModel]];
+    self.longPressView = [[EaseExtendMenuView alloc]initWithextMenuModelArray:extMenuArray menuViewModel:[[EaseExtMenuViewModel alloc]initWithType:isCustomCell ? ExtTypeCustomCellLongPress : ExtTypeLongPress itemCount:[extMenuArray count] extendMenuModel:_viewModel.extendMenuViewModel]];
     self.longPressView.delegate = self;
     
     CGSize longPressViewsize = [self.longPressView getExtViewSize];
@@ -596,7 +599,7 @@
     CGFloat xOffset = 0;
     CGFloat yOffset = 0;
     if (!isCustomCell) {
-        if (_currentLongPressCell.model.direction == AgoraChatMessageDirectionReceive || (_viewModel.msgAlignmentStyle == EaseAlignmentlLeft && _currentLongPressCell.model.message.chatType == AgoraChatTypeGroupChat)) {
+        if (_currentLongPressCell.model.direction == AgoraChatMessageDirectionReceive || (_viewModel.msgAlignmentStyle == EaseAlignmentlAll_Left && _currentLongPressCell.model.message.chatType == AgoraChatTypeGroupChat)) {
             xOffset = (avatarLonger + 3*componentSpacing + _currentLongPressCell.bubbleView.frame.size.width/2) - (longPressViewsize.width/2);
             if (xOffset < 2*componentSpacing) {
                 xOffset = 2*componentSpacing;
@@ -684,7 +687,7 @@
 }
 
 #pragma mark -- EaseMoreFunctionViewDelegate
-- (void)menuExtItemDidSelected:(EaseExtMenuModel *)menuItemModel extType:(ExtType)extType
+- (void)menuExtItemDidSelected:(EaseExtendMenuModel *)menuItemModel extType:(ExtType)extType
 {
     if (extType != ExtTypeChatBar) {
         [self hideLongPressView];
@@ -730,8 +733,6 @@
         });
     });
 }
-
-
 
 - (void)msgStatusDidChange:(AgoraChatMessage *)aMessage
                          error:(AgoraChatError *)aError
@@ -787,6 +788,9 @@
     // Get keyboard height
     CGRect keyBoardBounds  = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat keyBoardHeight = keyBoardBounds.size.height;
+    if (self.navigationController.navigationBarHidden) {
+        keyBoardHeight -= kIsBangsScreen ? 88 : 44;
+    }
     
     void (^animation)(void) = ^void(void) {
         [self.inputBar Ease_updateConstraints:^(EaseConstraintMaker *make) {
@@ -851,6 +855,18 @@
 
 #pragma mark - Data
 
+- (void)loadData:(BOOL)isScrollBottom
+{
+    __weak typeof(self) weakself = self;
+    void (^block)(NSArray *aMessages, AgoraChatError *aError) = ^(NSArray *aMessages, AgoraChatError *aError) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakself refreshTableViewWithData:aMessages isInsertBottom:NO isScrollBottom:isScrollBottom];
+        });
+    };
+    
+    [self.currentConversation loadMessagesStartFromId:self.moreMsgId count:50 searchDirection:AgoraChatMessageSearchDirectionUp completion:block];
+}
+
 - (NSArray *)formatMessages:(NSArray<AgoraChatMessage *> *)aMessages
 {
     NSMutableArray *formated = [[NSMutableArray alloc] init];
@@ -883,7 +899,7 @@
                     model.userDataProfile = self.otherProfile;
                 }
                 if ([model.message.from isEqualToString:self.currentConversation.conversationId]) {
-                    model.userDataProfile = self.oneselfProfile;
+                    model.userDataProfile = self.sentProfile;
                 }
             } else {
                 if (self.delegate && [self.delegate respondsToSelector:@selector(userProfile:)]) {
@@ -940,13 +956,15 @@
 
 - (void)dropdownRefreshTableViewWithData
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(loadMoreMessageData:currentMessageList:)]) {
-        [self.delegate loadMoreMessageData:self.moreMsgId currentMessageList:[self.messageList copy]];
-    } else {
-        if (self.tableView.isRefreshing) {
-            [self.tableView endRefreshing];
-        }
-    }
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(loadMoreMessageData:currentMessageList:)]) {
+//        [self.delegate loadMoreMessageData:self.moreMsgId currentMessageList:[self.messageList copy]];
+//    } else {
+//        if (self.tableView.isRefreshing) {
+//            [self.tableView endRefreshing];
+//        }
+//    }
+    
+    [self loadData:NO];
 }
 
 #pragma mark - Action
@@ -1032,7 +1050,7 @@
 
 #pragma mark - Public
 
-- (void)setupInputBar:(EaseInputBar *)inputbar
+- (void)setupInputMenu:(EaseInputMenu *)inputbar
 {
     if (!inputbar) {
         _inputBar = inputbar;
@@ -1040,7 +1058,7 @@
 }
 
 //Send input state
-- (void)setEditingStatusVisible:(BOOL)editingStatusVisible{}
+- (void)setTypingIndicator:(BOOL)typingIndicator{}
 
 //Read receipt
 - (void)sendReadReceipt:(AgoraChatMessage *)msg{}

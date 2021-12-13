@@ -56,7 +56,7 @@
     [self _setupSubviews];
     
     if (self.canSend) {
-        self.mapView.showsUserLocation = YES;//显示当前位置
+        self.mapView.showsUserLocation = YES;//show current location
         [self _startLocation];
     } else {
         [self _moveToLocation:self.locationCoordinate];

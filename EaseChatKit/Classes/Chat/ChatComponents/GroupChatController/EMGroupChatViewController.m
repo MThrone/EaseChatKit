@@ -48,9 +48,9 @@
 //Read the receipt details
 - (void)messageReadReceiptDetil:(EaseMessageCell *)aCell
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(groupMessageReadReceiptDetail:groupId:)]) {
-        [self.delegate groupMessageReadReceiptDetail:aCell.model.message groupId:self.currentConversation.conversationId];
-    }
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(groupMessageReadReceiptDetail:groupId:)]) {
+//        [self.delegate groupMessageReadReceiptDetail:aCell.model.message groupId:self.currentConversation.conversationId];
+//    }
 }
 
 #pragma mark - ACtion

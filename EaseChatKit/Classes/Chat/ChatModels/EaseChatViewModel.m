@@ -16,28 +16,28 @@
     self = [super init];
     if (self) {
         _chatViewBgColor = [UIColor colorWithRed:255/255 green:255/255 blue:255/255 alpha:1];
-        _inputBarBgColor = [UIColor colorWithWhite:1.0 alpha:0.8];
-        _extFuncModel = [[EaseExtFuncViewModel alloc]init];
+        _inputMenuBgColor = [UIColor colorWithWhite:1.0 alpha:0.8];
+        _extendMenuViewModel = [[EaseExtendMenuViewModel alloc]init];
         _msgTimeItemBgColor = [UIColor whiteColor];
         _msgTimeItemFont = [UIFont fontWithName:@"PingFang SC" size:12.0];
         _msgTimeItemFontColor = [UIColor colorWithHexString:@"#999999"];
-        _receiveBubbleBgImage = [UIImage easeUIImageNamed:@"msg_bg_recv"];
-        _sendBubbleBgImage = [UIImage easeUIImageNamed:@"msg_bg_send"];
+        _receiverBubbleBgImage = [UIImage easeUIImageNamed:@"msg_bg_recv"];
+        _senderBubbleBgImage = [UIImage easeUIImageNamed:@"msg_bg_send"];
         BubbleCornerRadius right = {16, 16, 16, 4};
         BubbleCornerRadius left = {16, 16, 4, 16};
         _rightAlignmentCornerRadius = right;
         _leftAlignmentCornerRadius = left;
-        _bubbleBgEdgeInset = UIEdgeInsetsMake(16, 16, 16, 16);
-        _oneselfFontColor = [UIColor whiteColor];
-        _otherFontColor = [UIColor blackColor];
-        _contentFontSize = 16.f;
-        _inputBarStyle = EaseInputBarStyleAll;
+        _bubbleBgEdgeInsets = UIEdgeInsetsMake(16, 16, 16, 16);
+        _sentFontColor = [UIColor whiteColor];
+        _reveivedFontColor = [UIColor blackColor];
+        _textMessaegFont = [UIFont fontWithName:@"PingFang SC" size:16.0];
+        _inputMenuStyle = EaseInputMenuStyleAll;
         _avatarStyle = Circular;
         _avatarCornerRadius = 0;
-        _displayOtherAvatar = YES;
-        _displayOtherName = YES;
-        _displayOneselfName = YES;
-        _displayOneselfAvatar = YES;
+        _displayReceivedAvatar = YES;
+        _displayReceiverName = YES;
+        _displaySentName = YES;
+        _displaySentAvatar = YES;
     }
     return self;
 }
@@ -49,15 +49,24 @@
     }
 }
 
-- (void)setInputBarBgColor:(UIColor *)inputBarBgColor
+- (void)setInputMenuBgColor:(UIColor *)inputMenuBgColor
 {
-    _inputBarBgColor = inputBarBgColor;
+    if (inputMenuBgColor) {
+        _inputMenuBgColor = inputMenuBgColor;
+    }
 }
 
-- (void)setExtFuncModel:(EaseExtFuncViewModel *)extFuncModel
+- (void)setInputMenuStyle:(EaseInputMenuStyle)inputMenuStyle
 {
-    if (extFuncModel) {
-        _extFuncModel = extFuncModel;
+    if (inputMenuStyle >= 1 && inputMenuStyle <= 5) {
+        _inputMenuStyle = inputMenuStyle;
+    }
+}
+
+- (void)setExtendMenuViewModel:(EaseExtendMenuViewModel *)extendMenuViewModel
+{
+    if (extendMenuViewModel) {
+        _extendMenuViewModel = extendMenuViewModel;
     }
 }
 
@@ -75,54 +84,54 @@
     }
 }
 
-- (void)setreceiveBubbleBgImage:(UIImage *)receiveBubbleBgImage
+- (void)setMsgTimeItemFont:(UIFont *)msgTimeItemFont
 {
-    if (receiveBubbleBgImage) {
-        _receiveBubbleBgImage = receiveBubbleBgImage;
+    if (msgTimeItemFont) {
+        _msgTimeItemFont = msgTimeItemFont;
+    }
+}
+
+- (void)setReceiverBubbleBgImage:(UIImage *)receiverBubbleBgImage
+{
+    if (receiverBubbleBgImage) {
+        _receiverBubbleBgImage = receiverBubbleBgImage;
     } else {
-        _receiveBubbleBgImage = [UIImage easeUIImageNamed:@""];
+        _receiverBubbleBgImage = [UIImage easeUIImageNamed:@""];
     }
 }
 
-- (void)setsendBubbleBgImage:(UIImage *)sendBubbleBgImage
+- (void)setSenderBubbleBgImage:(UIImage *)senderBubbleBgImage
 {
-    if (sendBubbleBgImage) {
-        _sendBubbleBgImage = sendBubbleBgImage;
+    if (senderBubbleBgImage) {
+        _senderBubbleBgImage = senderBubbleBgImage;
     } else {
-        _sendBubbleBgImage = [UIImage easeUIImageNamed:@"“"];
+        _senderBubbleBgImage = [UIImage easeUIImageNamed:@"“"];
     }
 }
 
-- (void)setBubbleBgEdgeInset:(UIEdgeInsets)bubbleBgEdgeInset
+- (void)setBubbleBgEdgeInsets:(UIEdgeInsets)bubbleBgEdgeInsets
 {
-    _bubbleBgEdgeInset = bubbleBgEdgeInset;
+    _bubbleBgEdgeInsets = bubbleBgEdgeInsets;
 }
 
-- (void)setOneselfFontColor:(UIColor *)oneselfFontColor
+- (void)setSentFontColor:(UIColor *)sentFontColor
 {
-    if (oneselfFontColor) {
-        _oneselfFontColor = oneselfFontColor;
+    if (sentFontColor) {
+        _sentFontColor = sentFontColor;
     }
 }
 
-- (void)setOtherFontColor:(UIColor *)otherFontColor
+- (void)setReveivedFontColor:(UIColor *)reveivedFontColor
 {
-    if (otherFontColor) {
-        _otherFontColor = otherFontColor;
+    if (reveivedFontColor) {
+        _reveivedFontColor = reveivedFontColor;
     }
 }
 
-- (void)setContentFontSize:(CGFloat)contentFontSize
+- (void)setTextMessaegFont:(UIFont *)textMessaegFont
 {
-    if (contentFontSize > 0) {
-        _contentFontSize = contentFontSize;
-    }
-}
-
-- (void)setInputBarStyle:(EaseInputBarStyle)inputBarStyle
-{
-    if (inputBarStyle >= 1 && inputBarStyle <= 5) {
-        _inputBarStyle = inputBarStyle;
+    if (textMessaegFont) {
+        _textMessaegFont = textMessaegFont;
     }
 }
 

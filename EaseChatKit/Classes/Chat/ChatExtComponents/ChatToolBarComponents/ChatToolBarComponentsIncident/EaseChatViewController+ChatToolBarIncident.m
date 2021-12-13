@@ -73,7 +73,7 @@ static const void *imagePickerKey = &imagePickerKey;
             }
             if (status == PHAuthorizationStatusDenied) {
                 //The user has explicitly denied application access to this photo data
-                [EaseAlertController showErrorAlert:@"Access to albums is not allowed"];
+                [EaseAlertController showErrorAlert:@"Camera permission not enabled"];
             }
             if (status == PHAuthorizationStatusRestricted) {
                 //This application does not have authorized access to photo data. It could be parental control
@@ -244,7 +244,7 @@ static const void *imagePickerKey = &imagePickerKey;
 @end
 
 /**
-    位置消息
+    Location
  */
 
 @implementation EaseChatViewController (ChatToolBarLocation)
@@ -280,7 +280,7 @@ static const void *imagePickerKey = &imagePickerKey;
 
 
 /**
-    选择文件
+    File
  */
 
 @implementation EaseChatViewController (ChatToolBarFileOpen)

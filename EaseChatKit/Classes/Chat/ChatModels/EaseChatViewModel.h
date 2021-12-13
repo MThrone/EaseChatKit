@@ -8,25 +8,25 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "EaseChatEnums.h"
-#import "EaseExtFuncViewModel.h"
+#import "EaseExtendMenuViewModel.h"
 
 /*!
- *  Input view type
+ *  Input menu style
  */
-typedef NS_ENUM(NSInteger, EaseInputBarStyle) {
-    EaseInputBarStyleAll = 1,          //All functions
-    EaseInputBarStyleNoAudio,          //No Audio
-    EaseInputBarStyleNoEmoji,          //No Emoji
-    EaseInputBarStyleNoAudioAndEmoji,  //No Audio And Emoji
-    EaseInputBarStyleOnlyText,         //Only Text
+typedef NS_ENUM(NSInteger, EaseInputMenuStyle) {
+    EaseInputMenuStyleAll = 1,          //All functions
+    EaseInputMenuStyleNoAudio,          //No Audio
+    EaseInputMenuStyleNoEmoji,          //No Emoji
+    EaseInputMenuStyleNoAudioAndEmoji,  //No Audio And Emoji
+    EaseInputMenuStyleOnlyText,         //Only Text
 };
 
 /*!
- *  Group chat message alignment
+ *  Message alignment
  */
 typedef NS_ENUM(NSInteger, EaseAlignmentStyle) {
-    EaseAlignmentNormal = 1,     //Left Right alignment
-    EaseAlignmentlLeft,          //The left alignment
+    EaseAlignmentLeft_Right = 1,     //Left Right alignment
+    EaseAlignmentlAll_Left,          //The left alignment
 };
 
 typedef struct BubbleCornerRadius {
@@ -53,10 +53,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIColor *msgTimeItemFontColor;
 
 // Bubble background image of received message
-@property (nonatomic, strong) UIImage *receiveBubbleBgImage;
+@property (nonatomic, strong) UIImage *receiverBubbleBgImage;
 
 // Bubble background image of sent message
-@property (nonatomic, strong) UIImage *sendBubbleBgImage;
+@property (nonatomic, strong) UIImage *senderBubbleBgImage;
 
 // Right align image/video/attachment message bubble cornerRadius
 @property (nonatomic) BubbleCornerRadius rightAlignmentCornerRadius;
@@ -65,37 +65,37 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BubbleCornerRadius leftAlignmentCornerRadius;
 
 // Message bubble background protected area
-@property (nonatomic) UIEdgeInsets bubbleBgEdgeInset;
+@property (nonatomic) UIEdgeInsets bubbleBgEdgeInsets;
 
-// Oneself message font color
-@property (nonatomic, strong) UIColor *oneselfFontColor;
+// Sent message font color
+@property (nonatomic, strong) UIColor *sentFontColor;
 
-// Other message font Color
-@property (nonatomic, strong) UIColor *otherFontColor;
+// Receiver message font Color
+@property (nonatomic, strong) UIColor *reveivedFontColor;
 
-// Text message font size
-@property (nonatomic) CGFloat contentFontSize;
+// Text message font
+@property (nonatomic) UIFont *textMessaegFont;
 
-// Input viwe background color and input view gradient color mutually exclusive. display background color first
-@property (nonatomic, strong) UIColor *inputBarBgColor;
+// Input menu background color and input menu gradient color mutually exclusive. display background color first
+@property (nonatomic, strong) UIColor *inputMenuBgColor;
 
-// Input view extends functional data model
-@property (nonatomic) EaseExtFuncViewModel *extFuncModel;
+// Input menu type
+@property (nonatomic) EaseInputMenuStyle inputMenuStyle;
 
-// Input view type
-@property (nonatomic) EaseInputBarStyle inputBarStyle;
+// Input menu extend view model
+@property (nonatomic) EaseExtendMenuViewModel *extendMenuViewModel;
 
-// Display oneself avatar
-@property (nonatomic) BOOL displayOneselfAvatar;
+// Display sent avatar
+@property (nonatomic) BOOL displaySentAvatar;
 
-// Display other avatar
-@property (nonatomic) BOOL displayOtherAvatar;
+// Display received avatar
+@property (nonatomic) BOOL displayReceivedAvatar;
 
-// Display oneself name
-@property (nonatomic) BOOL displayOneselfName;
+// Display sent name
+@property (nonatomic) BOOL displaySentName;
 
-// Display other name
-@property (nonatomic) BOOL displayOtherName;
+// Display received name
+@property (nonatomic) BOOL displayReceiverName;
 
 // Avatar style
 @property (nonatomic) EaseChatAvatarStyle avatarStyle;
@@ -103,7 +103,7 @@ NS_ASSUME_NONNULL_BEGIN
 // Avatar cornerRadius Default: 0 (Only avatar type RoundedCorner)
 @property (nonatomic) CGFloat avatarCornerRadius;
 
-// Chat view message alignment (Only group chat can be set)
+// Chat view message alignment
 @property (nonatomic) EaseAlignmentStyle msgAlignmentStyle;
 
 @end

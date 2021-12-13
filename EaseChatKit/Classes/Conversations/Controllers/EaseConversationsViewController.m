@@ -2,7 +2,7 @@
 //  EaseConversationsViewController.m
 //  EaseChatKit
 //
-//  Created by 杜洁鹏 on 2020/10/29.
+//  Created by dujiepeng on 2020/10/29.
 //
 
 #import "EaseConversationsViewController.h"
@@ -184,6 +184,13 @@ static NSString *cellIdentifier = @"EaseConversationCell";
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(easeTableView:willBeginEditingRowAtIndexPath:)]) {
         [self.delegate easeTableView:tableView willBeginEditingRowAtIndexPath:indexPath];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(easeTableView:didEndEditingRowAtIndexPath:)]) {
+        [self.delegate easeTableView:tableView didEndEditingRowAtIndexPath:indexPath];
     }
 }
 

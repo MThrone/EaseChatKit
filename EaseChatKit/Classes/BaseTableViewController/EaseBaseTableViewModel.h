@@ -2,7 +2,7 @@
 //  EaseBaseTableViewModel.h
 //  EaseChatKit
 //
-//  Created by 杜洁鹏 on 2020/11/11.
+//  Created by dujiepeng on 2020/11/11.
 //
 
 #import <UIKit/UIKit.h>
@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 // Whether to refresh by pull-down
 @property (nonatomic) BOOL canRefresh;
 
-// tableView bg view
+// TableView bg view
 @property (nonatomic, strong) UIView *bgView;
 
 // UITableViewCell bg color

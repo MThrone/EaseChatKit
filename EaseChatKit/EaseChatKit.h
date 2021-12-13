@@ -27,8 +27,8 @@ FOUNDATION_EXPORT const unsigned char EaseChatKitVersionString[];
 #import "EaseChatViewController.h"
 #import "EaseMessageModel.h"
 #import "EaseChatViewModel.h"
-#import "EaseExtMenuModel.h"
+#import "EaseExtendMenuModel.h"
 #import "EaseMessageCell.h"
-#import "EaseInputBar.h"
+#import "EaseInputMenu.h"
 
 

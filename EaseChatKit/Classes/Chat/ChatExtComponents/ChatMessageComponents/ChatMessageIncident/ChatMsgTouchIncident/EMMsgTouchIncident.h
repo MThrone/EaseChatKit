@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
-    消息事件工厂
+    Message event factory
  */
 @interface AgoraChatMessageEventStrategyFactory : NSObject
 

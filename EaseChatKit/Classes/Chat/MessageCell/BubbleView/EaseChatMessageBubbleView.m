@@ -34,12 +34,12 @@
     
     //[self az_setGradientBackgroundWithColors:@[[UIColor redColor],[UIColor orangeColor]] locations:nil startPoint:CGPointMake(0, 0) endPoint:CGPointMake(1, 1)];
     
-    UIEdgeInsets edge = UIEdgeInsetsMake(_viewModel.bubbleBgEdgeInset.top, _viewModel.bubbleBgEdgeInset.left, _viewModel.bubbleBgEdgeInset.bottom, _viewModel.bubbleBgEdgeInset.right);
+    UIEdgeInsets edge = UIEdgeInsetsMake(_viewModel.bubbleBgEdgeInsets.top, _viewModel.bubbleBgEdgeInsets.left, _viewModel.bubbleBgEdgeInsets.bottom, _viewModel.bubbleBgEdgeInsets.right);
     if (self.direction == AgoraChatMessageDirectionSend) {
-        UIImage *image = [_viewModel.sendBubbleBgImage resizableImageWithCapInsets:edge resizingMode:UIImageResizingModeStretch];
+        UIImage *image = [_viewModel.senderBubbleBgImage resizableImageWithCapInsets:edge resizingMode:UIImageResizingModeStretch];
         [self setImage:image];
     } else {
-        UIImage *image = [_viewModel.receiveBubbleBgImage resizableImageWithCapInsets:edge resizingMode:UIImageResizingModeStretch];
+        UIImage *image = [_viewModel.receiverBubbleBgImage resizableImageWithCapInsets:edge resizingMode:UIImageResizingModeStretch];
         [self setImage:image];
     }
 }

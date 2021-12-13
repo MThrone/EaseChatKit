@@ -2,7 +2,7 @@
 //  EaseBadgeView.h
 //  
 //
-//  Created by 杜洁鹏 on 2020/11/20.
+//  Created by dujiepeng on 2020/11/20.
 //
 
 #import <UIKit/UIKit.h>

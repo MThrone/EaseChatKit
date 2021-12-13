@@ -40,7 +40,7 @@
     [self setupBubbleBackgroundImage];
     
     self.textLabel = [[UILabel alloc] init];
-    self.textLabel.font = [UIFont systemFontOfSize:_viewModel.contentFontSize];
+    self.textLabel.font = _viewModel.textMessaegFont;
     self.textLabel.numberOfLines = 0;
     self.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self addSubview:self.textLabel];
@@ -49,9 +49,9 @@
         make.bottom.equalTo(self.ease_bottom).offset(-kVerticalPadding);
     }];
     if (self.direction == AgoraChatMessageDirectionSend) {
-        self.textLabel.textColor = _viewModel.oneselfFontColor;
+        self.textLabel.textColor = _viewModel.sentFontColor;
     } else {
-        self.textLabel.textColor = _viewModel.otherFontColor;
+        self.textLabel.textColor = _viewModel.reveivedFontColor;
     }
     if (self.direction == AgoraChatMessageDirectionSend) {
         [self.textLabel Ease_makeConstraints:^(EaseConstraintMaker *make) {

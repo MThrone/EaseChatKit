@@ -2,7 +2,7 @@
 //  EaseConversationsViewController.h
 //  EaseChatKit
 //
-//  Created by 杜洁鹏 on 2020/10/29.
+//  Created by dujiepeng on 2020/10/29.
 //
 
 #import <UIKit/UIKit.h>
@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
                                          actions:(NSArray<UIContextualAction *> *)actions  API_AVAILABLE(ios(11.0));
 
 - (void)easeTableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath;
+
+- (void)easeTableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath;
 
 - (void)easeTableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 

@@ -2,7 +2,7 @@
 //  EaseChatKitManager.m
 //  EaseChatKit
 //
-//  Created by 杜洁鹏 on 2020/10/29.
+//  Created by dujiepeng on 2020/10/29.
 //
 
 #import "EaseChatKitManager.h"
@@ -17,8 +17,8 @@ static NSString *g_ChatKitVersion = @"3.8.7";
 
 @interface EaseChatKitManager ()<AgoraChatMultiDevicesDelegate, AgoraChatContactManagerDelegate, AgoraChatGroupManagerDelegate, AgoraChatManagerDelegate>
 @property (nonatomic, strong) EaseMulticastDelegate<EaseChatKitManagerDelegate> *delegates;
-@property (nonatomic, strong) NSString *currentConversationId;  //当前会话聊天id
-@property (nonatomic, assign) NSInteger currentUnreadCount; //当前未读总数
+@property (nonatomic, strong) NSString *currentConversationId;
+@property (nonatomic, assign) NSInteger currentUnreadCount;
 @property (nonatomic, strong) dispatch_queue_t msgQueue;
 @end
 
@@ -96,23 +96,23 @@ static NSString *g_ChatKitVersion = @"3.8.7";
 
 #pragma mark - AgoraChatManageDelegate
 
-//收到消息
 - (void)messagesDidReceive:(NSArray *)aMessages
 {
     [self _resetConversationsUnreadCount];
 }
  
+/*
 #pragma mark - AgoraChatContactManagerDelegate
 
-////收到好友请求
-//- (void)friendRequestDidReceiveFromUser:(NSString *)aUsername
-//                                message:(NSString *)aMessage
-//{
-//    if ([aUsername length] == 0) {
-//        return;
-//    }
-//    [self structureSystemNotification:aUsername userName:aUsername reason:ContanctsRequestDidReceive];
-//}
+//收到好友请求
+- (void)friendRequestDidReceiveFromUser:(NSString *)aUsername
+                                message:(NSString *)aMessage
+{
+    if ([aUsername length] == 0) {
+        return;
+    }
+    [self structureSystemNotification:aUsername userName:aUsername reason:ContanctsRequestDidReceive];
+}
 
 //收到好友请求被同意/同意
 - (void)friendshipDidAddByUser:(NSString *)aUsername
@@ -236,8 +236,9 @@ static NSString *g_ChatKitVersion = @"3.8.7";
     //刷新会话列表
     [[NSNotificationCenter defaultCenter] postNotificationName:CONVERSATIONLIST_UPDATE object:nil];
 }
+*/
 
-//最新消息时间
+//Latest message time
 - (long long)getLatestMsgTimestamp
 {
     return [[NSDate new] timeIntervalSince1970] * 1000;
@@ -291,7 +292,7 @@ static NSString *g_ChatKitVersion = @"3.8.7";
 
 #pragma mark - 未读数变化
 
-//会话所有信息标记已读
+//Session flag read
 - (void)markAllMessagesAsReadWithConversation:(AgoraChatConversation *)conversation
 {
     if (conversation && conversation.unreadMessagesCount > 0) {
@@ -300,7 +301,6 @@ static NSString *g_ChatKitVersion = @"3.8.7";
     }
 }
 
-//未读总数变化
 - (void)_resetConversationsUnreadCount
 {
     NSInteger unreadCount = 0;
@@ -315,9 +315,9 @@ static NSString *g_ChatKitVersion = @"3.8.7";
     [self coversationsUnreadCountUpdate:unreadCount];
 }
 
-#pragma mark - 多播
+#pragma mark - multicast
 
-//未读总数多播
+//Session unread
 - (void)coversationsUnreadCountUpdate:(NSInteger)unreadCount
 {
     EaseMulticastDelegateEnumerator *multicastDelegates = [self.delegates delegateEnumerator];
@@ -327,7 +327,7 @@ static NSString *g_ChatKitVersion = @"3.8.7";
             [delegate conversationsUnreadCountUpdate:unreadCount];
     }
 }
-
+/*
 #pragma mark - 系统通知
 
 //是否需要系统通知
@@ -356,7 +356,7 @@ static NSString *g_ChatKitVersion = @"3.8.7";
     }
     return [[NSDictionary alloc]init];
 }
-
+*/
 @end
 
 @implementation EaseChatKitManager (currentUnreadCount)

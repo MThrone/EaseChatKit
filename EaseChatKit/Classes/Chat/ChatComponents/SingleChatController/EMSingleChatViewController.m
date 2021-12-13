@@ -7,13 +7,13 @@
 //
 
 #import "EMSingleChatViewController.h"
-#import "EaseInputBar.h"
+#import "EaseInputMenu.h"
 #import "EaseMessageModel.h"
 #import "EaseChatViewController+EaseUI.h"
 
 #define TypingTimerCountNum 10
 
-@interface EMSingleChatViewController () <EaseInputBarDelegate>
+@interface EMSingleChatViewController () <EaseInputMenuDelegate>
 {
     long long _previousChangedTimeStamp;
 }
@@ -167,7 +167,7 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - EaseInputBarDelegate
+#pragma mark - EaseInputMenuDelegate
 
 - (void)inputViewDidChange:(UITextView *)aInputView
 {
@@ -229,8 +229,8 @@
 {
     if (_receiveTypingCountDownNum == 0) {
         [self stopReceiveTypingTimer];
-        if (self.delegate && [self.delegate respondsToSelector:@selector(endTyping)]) {
-            [self.delegate endTyping];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(peerEndTyping)]) {
+            [self.delegate peerEndTyping];
         }
         return;
     }
@@ -244,8 +244,8 @@
 
     [[NSRunLoop currentRunLoop] addTimer:_receiveTypingTimer forMode:UITrackingRunLoopMode];
     [_receiveTypingTimer fire];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(beginTyping)]) {
-        [self.delegate beginTyping];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(peerTyping)]) {
+        [self.delegate peerTyping];
     }
     
 }

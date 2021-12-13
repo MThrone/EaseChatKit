@@ -25,7 +25,7 @@
 @end
 
 /**
-   消息事件工厂
+    Message event factory
 */
 @implementation AgoraChatMessageEventStrategyFactory
 
@@ -52,7 +52,7 @@
 @end
 
 /**
-    文本事件
+    The text event
  */
 @implementation TextMsgEvent
 
@@ -63,11 +63,11 @@
 
     NSDataDetector *detector= [[NSDataDetector alloc] initWithTypes:NSTextCheckingTypeLink error:nil];
     NSArray *checkArr = [detector matchesInString:chatStr options:0 range:NSMakeRange(0, chatStr.length)];
-    //判断有没有链接
+    //Check for links
     if(checkArr.count > 0) {
-        if (checkArr.count > 1) { //网址多于1个时让用户选择跳哪个链接
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"请选择要打开的链接" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+        if (checkArr.count > 1) { //Let the user choose which link to jump to when there are more than 1 urls
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please select the link to open" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
             
             for (NSTextCheckingResult *result in checkArr) {
                 NSString *urlStr = result.URL.absoluteString;
@@ -76,7 +76,7 @@
                 }]];
             }
             [self.chatController presentViewController:alertController animated:YES completion:nil];
-        }else {//一个链接直接打开
+        }else {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[checkArr[0] URL].absoluteString] options:[NSDictionary new] completionHandler:nil];
         }
     }
@@ -85,7 +85,7 @@
 @end
 
 /**
-    图片事件
+    Image event
  */
 @implementation ImageMsgEvent
 
@@ -93,7 +93,7 @@
 {
     __weak typeof(self.chatController) weakself = self.chatController;
     void (^downloadThumbBlock)(EaseMessageModel *aModel) = ^(EaseMessageModel *aModel) {
-        [weakself showHint:@"获取缩略图..."];
+        [weakself showHint:@"Fetch thumbnails..."];
         [[AgoraChatClient sharedClient].chatManager downloadMessageThumbnail:aModel.message progress:nil completion:^(AgoraChatMessage *message, AgoraChatError *error) {
             if (!error) {
                 [weakself.tableView reloadData];
@@ -129,11 +129,11 @@
         return;
     }
     
-    [self.chatController showHudInView:self.chatController.view hint:@"下载原图..."];
+    [self.chatController showHudInView:self.chatController.view hint:@"Download the original image..."];
     [[AgoraChatClient sharedClient].chatManager downloadMessageAttachment:aCell.model.message progress:nil completion:^(AgoraChatMessage *message, AgoraChatError *error) {
         [weakself hideHud];
         if (error) {
-            [EaseAlertController showErrorAlert:@"下载原图失败"];
+            [EaseAlertController showErrorAlert:@"Download original image fail !"];
         } else {
             if (message.direction == AgoraChatMessageDirectionReceive && !message.isReadAcked) {
                 [[AgoraChatClient sharedClient].chatManager sendMessageReadAck:message.messageId toUser:message.conversationId completion:nil];
@@ -144,7 +144,7 @@
             if (image) {
                 [[EMImageBrowser sharedBrowser] showImages:@[image] fromController:weakself];
             } else {
-                [EaseAlertController showErrorAlert:@"获取原图失败"];
+                [EaseAlertController showErrorAlert:@"Fetch original image fail !"];
             }
         }
     }];
@@ -154,7 +154,7 @@
 
 
 /**
-    位置消息事件
+    Location message event
  */
 @implementation LocationMsgEvent
 
@@ -170,7 +170,7 @@
 @end
 
 /**
-    语音消息事件
+    Voice Message Events
  */
 @implementation VoiceMsgEvent
 
@@ -178,7 +178,7 @@
 {
     AgoraChatVoiceMessageBody *body = (AgoraChatVoiceMessageBody*)aCell.model.message.body;
     if (body.downloadStatus == AgoraChatDownloadStatusDownloading) {
-        [EaseAlertController showInfoAlert:@"正在下载语音,稍后点击"];
+        [EaseAlertController showInfoAlert:@"Downloading voice, click later"];
         return;
     }
     
@@ -218,11 +218,11 @@
     }
     
     __weak typeof(self.chatController) weakChatControl = self.chatController;
-    [self.chatController showHudInView:self.chatController.view hint:@"下载语音..."];
+    [self.chatController showHudInView:self.chatController.view hint:@"Download voice..."];
     [[AgoraChatClient sharedClient].chatManager downloadMessageAttachment:aCell.model.message progress:nil completion:^(AgoraChatMessage *message, AgoraChatError *error) {
         [weakChatControl hideHud];
         if (error) {
-            [EaseAlertController showErrorAlert:@"下载语音失败"];
+            [EaseAlertController showErrorAlert:@"Voice download failure"];
         } else {
             playBlock(aCell.model);
         }
@@ -232,7 +232,7 @@
 @end
 
 /**
-    视频消息事件
+    Video message event
  */
 @implementation VideoMsgEvent
 
@@ -252,11 +252,11 @@
     };
 
     void (^downloadBlock)(void) = ^ {
-        [weakChatController showHudInView:self.chatController.view hint:@"下载视频..."];
+        [weakChatController showHudInView:self.chatController.view hint:@"Download video..."];
         [[AgoraChatClient sharedClient].chatManager downloadMessageAttachment:aCell.model.message progress:nil completion:^(AgoraChatMessage *message, AgoraChatError *error) {
             [weakChatController hideHud];
             if (error) {
-                [EaseAlertController showErrorAlert:@"下载视频失败"];
+                [EaseAlertController showErrorAlert:@"Download video failed !"];
             } else {
                 if (!message.isReadAcked) {
                     [[AgoraChatClient sharedClient].chatManager sendMessageReadAck:message.messageId toUser:message.conversationId completion:nil];
@@ -268,14 +268,14 @@
     
     AgoraChatVideoMessageBody *body = (AgoraChatVideoMessageBody*)aCell.model.message.body;
     if (body.downloadStatus == AgoraChatDownloadStatusDownloading) {
-        [EaseAlertController showInfoAlert:@"正在下载视频,稍后点击"];
+        [EaseAlertController showInfoAlert:@"Downloading video, click later"];
         return;
     }
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL isCustomDownload = !([AgoraChatClient sharedClient].options.isAutoTransferMessageAttachments);
     if (body.thumbnailDownloadStatus == AgoraChatDownloadStatusFailed || ![fileManager fileExistsAtPath:body.thumbnailLocalPath]) {
-        [self.chatController showHint:@"下载缩略图"];
+        [self.chatController showHint:@"Download image thumbnails"];
         if (!isCustomDownload) {
             [[AgoraChatClient sharedClient].chatManager downloadMessageThumbnail:aCell.model.message progress:nil completion:^(AgoraChatMessage *message, AgoraChatError *error) {
                 downloadBlock();
@@ -297,7 +297,7 @@
 @end
 
 /**
-    文件消息事件
+    File message event
  */
 @implementation FileMsgEvent
 
@@ -307,7 +307,7 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
     if (body.downloadStatus == AgoraChatDownloadStatusDownloading) {
-        [EaseAlertController showInfoAlert:@"正在下载文件,稍后点击"];
+        [EaseAlertController showInfoAlert:@"Downloading file, click later"];
         return;
     }
     __weak typeof(self.chatController) weakself = self.chatController;
@@ -328,7 +328,7 @@
     [[AgoraChatClient sharedClient].chatManager downloadMessageAttachment:aCell.model.message progress:nil completion:^(AgoraChatMessage *message, AgoraChatError *error) {
         [weakself hideHud];
         if (error) {
-            [EaseAlertController showErrorAlert:@"下载文件失败"];
+            [EaseAlertController showErrorAlert:@"Download file failed !"];
         } else {
             if (!message.isReadAcked) {
                 [[AgoraChatClient sharedClient].chatManager sendMessageReadAck:message.messageId toUser:message.conversationId completion:nil];
@@ -341,7 +341,7 @@
 @end
 
 /**
-    会议消息事件
+    Conference
  */
 @implementation ConferenceMsgEvent
 

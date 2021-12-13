@@ -2,7 +2,7 @@
 //  UIColor+EaseUI.m
 //  EaseChatKit
 //
-//  Created by 杜洁鹏 on 2020/11/19.
+//  Created by dujiepeng on 2020/11/19.
 //
 
 #import "UIColor+EaseUI.h"
