@@ -788,10 +788,15 @@
     // Get keyboard height
     CGRect keyBoardBounds  = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat keyBoardHeight = keyBoardBounds.size.height;
-    if (self.navigationController.navigationBarHidden) {
-        keyBoardHeight -= kIsBangsScreen ? 88 : 44;
+
+    CGFloat offset = [UIScreen mainScreen].bounds.size.height - self.view.frame.origin.y - self.view.frame.size.height;
+    
+    if (offset >= keyBoardHeight) {
+        return;
     }
     
+    keyBoardHeight -= offset;
+
     void (^animation)(void) = ^void(void) {
         [self.inputBar Ease_updateConstraints:^(EaseConstraintMaker *make) {
             make.bottom.equalTo(self.view).offset(-keyBoardHeight);
